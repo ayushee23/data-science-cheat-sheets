@@ -1,4 +1,4 @@
-# Data Science % Analytics Interview Notes
+# Data Science and Analytics Interview Notes
 
 This repo contains my notes from my interview preparation for Data Science/Analytics Engineer roles
 
