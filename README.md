@@ -4,7 +4,7 @@ This repo contains my notes from my interview preparation for Data Science/Analy
 
 ## Topics
 
-- [SQL](./sql.md)
+- [SQL](./SQL.md)
 
 ## Goals
 
