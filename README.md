@@ -5,6 +5,7 @@ This repo contains my notes from my interview preparation for Data Science/Analy
 ## Topics
 
 - [SQL](./SQL.md)
+- [Product Analytics](./ProductAnalytics.md)
 
 ## Goals
 
