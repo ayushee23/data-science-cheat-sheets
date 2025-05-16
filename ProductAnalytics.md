@@ -75,14 +75,14 @@ that shows your users come back on 15 out of 30 days each month. Stickiness = DA
   
   NRR = MRR at end of time period / MRR at beginning of time period
 
-  - Average revenue per user (ARPU) - is the revenue your company generates per user. Calculating average revenue per user lets you see how 
-    much value the average user brings to your business. Average revenue per user can provide a benchmark for making certain product 
-    decisions. 
+- Average revenue per user (ARPU) - is the revenue your company generates per user. Calculating average revenue per user lets you see how 
+  much value the average user brings to your business. Average revenue per user can provide a benchmark for making certain product 
+  decisions. 
   
-    How to measure: If you generate revenue solely through subscriptions that have only one price, you already know
-    this number, and it’s probably not going to change often. Otherwise, divide your revenue over a given timeframe
-    by the number of users you had over that same timeframe to determine average revenue per user.
-    ARPU = Monthly revenue / Monthly active users
+  How to measure: If you generate revenue solely through subscriptions that have only one price, you already know
+  this number, and it’s probably not going to change often. Otherwise, divide your revenue over a given timeframe
+  by the number of users you had over that same timeframe to determine average revenue per user.
+  ARPU = Monthly revenue / Monthly active users
 
 
 **North Star Metric**
