@@ -42,44 +42,47 @@ How to measure: Divide your daily active users by your monthly active users (or 
 like weekly active users) to find your “stickiness” rate. If you have a stickiness rate of 50 percent, for example,
 that shows your users come back on 15 out of 30 days each month. Stickiness = DAU / MAU
 
-Stickiness is a percentage that shows how often your monthly users return daily. DAU/MAU. It can also be defined as DAU/WAU, WAU/MAU
+  Stickiness is a percentage that shows how often your monthly users return daily. DAU/MAU. It can also be defined as DAU/WAU, WAU/MAU
 
 
 - Churn rate is the inverse of your retention rate. It is a measure of how many users stopped returning to your product.
-How to measure: Calculate your churn rate by dividing your total number of active users at the end of the month
-by the total number of active users at the beginning of the month. You can also calculate churn by week or year,
-depending on which interval is of interest.
-Churn rate = Total active users at end of time period / Total active users at start of time period
-
-Once you have your churn rate, you can dive deeper to see how those churn rates differ across devices, geography
-or any other demographic you are interested in. This analysis may reveal that certain types of users account for
-higher churn than others.
+  How to measure: Calculate your churn rate by dividing your total number of active users at the end of the month
+  by the total number of active users at the beginning of the month. You can also calculate churn by week or year,
+  depending on which interval is of interest.
+  Churn rate = Total active users at end of time period / Total active users at start of time period
+  
+  Once you have your churn rate, you can dive deeper to see how those churn rates differ across devices, geography
+  or any other demographic you are interested in. This analysis may reveal that certain types of users account for
+  higher churn than others.
 
 
 - Customer lifetime value: is the value of a customer across their entire relationship with your company.
-Lifelong, frequent customers provide more value to a business than one-time customers.
-How to measure: 
-Customer value = Average purchase frequency X Average value of purchase
-Customer lifetime value = Customer value X Average customer lifespan
+  Lifelong, frequent customers provide more value to a business than one-time customers.
+  How to measure: 
+  Customer value = Average purchase frequency X Average value of purchase
+  Customer lifetime value = Customer value X Average customer lifespan
 
-Understanding which customers drive the most value for your business will help you prioritize
-where to invest your resources to improve the product. If your high-value customers love a certain feature, then it
-benefits your product team to continue improving that feature over something that’s used less, or only matters to
-users who don’t provide as much value.
+  Understanding which customers drive the most value for your business will help you prioritize
+  where to invest your resources to improve the product. If your high-value customers love a certain feature, then it
+  benefits your product team to continue improving that feature over something that’s used less, or only matters to
+  users who don’t provide as much value.
 
 - Monthly recurring revenue(MRR) = Subscribers X Average monthly revenue per user (can be calculated similary for Annual Reccurring Revenue)
 
 - Net Revenue Retention -  Like user retention, net revenue retention is the revenue you retain over a given period. It’s usually
-measured monthly. Net revenue retention is important because it measures how well you are holding on to your existing customer base. If your net revenue retention rate is growing, so is your business.
+  measured monthly. Net revenue retention is important because it measures how well you are holding on to your existing customer base. If 
+  your net revenue retention rate is growing, so is your business.
+  
+  NRR = MRR at end of time period / MRR at beginning of time period
 
-NRR = MRR at end of time period / MRR at beginning of time period
-
-- Average revenue per user (ARPU) - is the revenue your company generates per user. Calculating average revenue per user lets you see how much value the average user brings to your business. Average revenue per user can provide a benchmark for making certain product decisions. 
-
-How to measure: If you generate revenue solely through subscriptions that have only one price, you already know
-this number, and it’s probably not going to change often. Otherwise, divide your revenue over a given timeframe
-by the number of users you had over that same timeframe to determine average revenue per user.
-ARPU = Monthly revenue / Monthly active users
+  - Average revenue per user (ARPU) - is the revenue your company generates per user. Calculating average revenue per user lets you see how 
+    much value the average user brings to your business. Average revenue per user can provide a benchmark for making certain product 
+    decisions. 
+  
+    How to measure: If you generate revenue solely through subscriptions that have only one price, you already know
+    this number, and it’s probably not going to change often. Otherwise, divide your revenue over a given timeframe
+    by the number of users you had over that same timeframe to determine average revenue per user.
+    ARPU = Monthly revenue / Monthly active users
 
 
 **North Star Metric**
