@@ -23,21 +23,21 @@ Resource for understanding product metrics, best metrics to select based on prob
 
 
 
-How you define your metrics is important -
-For number ofnew signups/leads we want to find high intent users who are more likely to convert
-CAC = total acquisition cost across channels/number of customers gained in that period
+- How you define your metrics is important -
+ - For number ofnew signups/leads we want to find high intent users who are more likely to convert
+   CAC = total acquisition cost across channels/number of customers gained in that period
 
-To measure activation rate, we define an activation event - something that indicates that the customer has started generating value from the product. Eg - sharing songs, adding friends, completing profile. To calculate this, divide the number of people who complete your milestone activation event by the number of users who signed up to use your product.
+- To measure activation rate, we define an activation event - something that indicates that the customer has started generating value from the product. Eg - sharing songs, adding friends, completing profile. To calculate this, divide the number of people who complete your milestone activation event by the number of users who signed up to use your product.
 
 
-DAU/WAU/MAU - The way each company defines active users is different. For example, simply opening an app isn’t a great
+- DAU/WAU/MAU - The way each company defines active users is different. For example, simply opening an app isn’t a great
 measure of an active user. You want to measure an action that shows people are using your app and getting
 value from it. This is known as a critical event. For a gaming app, that might mean completing a level or gaining
 experience points.
 How to measure: Use a product analytics tool to tag your defined critical event and measure the number of
 unique users who fire that event each month.
 
-Stickiness - Stickiness shows how often your users are coming back each month.
+- Stickiness - Stickiness shows how often your users are coming back each month.
 How to measure: Divide your daily active users by your monthly active users (or another metric of time,
 like weekly active users) to find your “stickiness” rate. If you have a stickiness rate of 50 percent, for example,
 that shows your users come back on 15 out of 30 days each month. Stickiness = DAU / MAU
@@ -45,7 +45,7 @@ that shows your users come back on 15 out of 30 days each month. Stickiness = DA
 Stickiness is a percentage that shows how often your monthly users return daily. DAU/MAU. It can also be defined as DAU/WAU, WAU/MAU
 
 
-Churn rate is the inverse of your retention rate. It is a measure of how many users stopped returning to your product.
+- Churn rate is the inverse of your retention rate. It is a measure of how many users stopped returning to your product.
 How to measure: Calculate your churn rate by dividing your total number of active users at the end of the month
 by the total number of active users at the beginning of the month. You can also calculate churn by week or year,
 depending on which interval is of interest.
@@ -56,7 +56,7 @@ or any other demographic you are interested in. This analysis may reveal that ce
 higher churn than others.
 
 
-Customer lifetime value: is the value of a customer across their entire relationship with your company.
+- Customer lifetime value: is the value of a customer across their entire relationship with your company.
 Lifelong, frequent customers provide more value to a business than one-time customers.
 How to measure: 
 Customer value = Average purchase frequency X Average value of purchase
@@ -67,14 +67,14 @@ where to invest your resources to improve the product. If your high-value custom
 benefits your product team to continue improving that feature over something that’s used less, or only matters to
 users who don’t provide as much value.
 
-Monthly recurring revenue(MRR) = Subscribers X Average monthly revenue per user (can be calculated similary for Annual Reccurring Revenue)
+- Monthly recurring revenue(MRR) = Subscribers X Average monthly revenue per user (can be calculated similary for Annual Reccurring Revenue)
 
-Net Revenue Retention -  Like user retention, net revenue retention is the revenue you retain over a given period. It’s usually
+- Net Revenue Retention -  Like user retention, net revenue retention is the revenue you retain over a given period. It’s usually
 measured monthly. Net revenue retention is important because it measures how well you are holding on to your existing customer base. If your net revenue retention rate is growing, so is your business.
 
 NRR = MRR at end of time period / MRR at beginning of time period
 
-Average revenue per user (ARPU) - is the revenue your company generates per user. Calculating average revenue per user lets you see how much value the average user brings to your business. Average revenue per user can provide a benchmark for making certain product decisions. 
+- Average revenue per user (ARPU) - is the revenue your company generates per user. Calculating average revenue per user lets you see how much value the average user brings to your business. Average revenue per user can provide a benchmark for making certain product decisions. 
 
 How to measure: If you generate revenue solely through subscriptions that have only one price, you already know
 this number, and it’s probably not going to change often. Otherwise, divide your revenue over a given timeframe
