@@ -155,9 +155,9 @@ Intermediate
 
 2. Explain the difference between correlated and non-correlated subqueries.
 
-Correlated: Depends on the outer query; runs row-by-row.
+Correlated: A correlated subquery depends on the outer query for its values. It is executed once for every row processed by the outer query. This means the inner query references columns from the outer query.; runs row-by-row.
 
-Non-correlated: Runs independently of the outer query.
+Non-correlated:  A non-correlated subquery runs independently of the outer query and returns a result that the outer query uses. It is executed only once.
 
 3. How do you use CASE statements with aggregation in SQL?Use CASE within aggregate functions to perform conditional counts/sums.Example:
 
@@ -165,9 +165,21 @@ SELECT department, SUM(CASE WHEN gender = 'F' THEN 1 ELSE 0 END) AS female_count
 
 4. How do you use window functions in SQL?Window functions perform calculations across a set of rows related to the current row. Examples include RANK(), ROW_NUMBER(), LEAD(), LAG().
 
-5. What are stored procedures, and how do you create one?Stored procedures are saved SQL code that can be reused.Example:
+5. What are stored procedures, and how do you create one?A stored procedure is like a saved block of SQL code that you can reuse again and again.
 
-CREATE PROCEDURE GetEmployees AS BEGIN SELECT * FROM employees; END;
+Think of it like a function in programming.
+
+Instead of writing the same SQL statements every time, you store them once in the database, and then just call the procedure whenever you need to run those statements. Example:
+
+CREATE PROCEDURE GetEmployees() // GetEmployees(IN dept INT)
+BEGIN 
+SELECT * FROM employees;        //  select * from employees where deptId=dept
+END;
+
+
+CALL GetEmployees()            // CALL GetEmployees(5)
+
+
 
 6. What is a trigger, and when would you use it?A trigger automatically runs in response to specific events (e.g., INSERT, UPDATE) on a table. Used for enforcing business rules.
 
