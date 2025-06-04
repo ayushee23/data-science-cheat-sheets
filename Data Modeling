@@ -1,1 +1,44 @@
+Data Warehouse Modeling(https://www.youtube.com/watch?v=g-FCc-NHOsg&list=PLTsNSGeIpGnGP8A74Ie1PgqHhewsqD3fv&index=2)
+
+Database(MySQL, Postgres, oracle) Vs Data Warehouse(teradata, exadata, redshift, snowflake)
+
+Data warehouse is built on top of database(made from multiple databases) but used for different purposes. 
+DW handles larges amounts of data, has read-heavy operations, optimal for high-latency operations, 
+contains denormalized data(can contain redundant data), columnar storage(parquet), optimized for parallel processing, 
+OLAP systems use data warehousing solutions. DW solutions work mostly on structured data(as opposed to Spark). 
+DW integrates data coming from multiple sources.
+
+Database is designed to store small amounts of data, for write-heavy operations, used for low-latency operations, normalized data, row-based storage, 
+not optimized for parallel processing, OLTP use database solutions
+
+In DW, we do ETL(Extract data from sources, transform the data and load into data warehouse/databases). 
+Problem with this is - the rate at which big data is generated(3V's) this can't transform it with that speed and with this we also have to know 
+the transformations that have to be applied to data beforehand(requires pre-defined schema), can handle only structured data, 
+and is expensive as data processing and storage needs increase and due to vertical scaling it can be scaled only to a certain point. 
+This is where data lake comes into picture.
+
+Data lake(s3 bucket, azure blob, HDFS) - lets you load all of the data into data storage and transform it on need basis; 
+unlimited storage due to horizontal scaling. It supports structured, semi-struc, unstructured data.
+
+In intial data lake systems, you could just use it for data storage and then pass it to data warehouse for transformation. 
+But now data lake systems have become refined and they can handle transformations as well. 
+They consist of 4 layers - 
+Ingestion layer - raw data storage 
+Processing - process the data 
+Processed - processed data based on use case(engineer level data access) 
+Consumption - business users/reporting tools take data from this layer(business users data access). At this stage, data could also be sent to a 
+database/data warehouse(optional)
+
+Data Mart - can be considered a subset of data warehouse containing data for a specific purpose. 
+Data from different departments/demographics/regions is fetched from DW and put into data marts through ETL. 
+Useful for business users who want only relevant data, or summarized tables and enables faster query performance. 
+It also protects data about different departments or other important data from unwanted access.
+
+Data from source system goes to DW through ETL and then to a BI system for generating reports
+
+Extract:
+
+DW has two layers - staging layer and user access layer
+
+
 
