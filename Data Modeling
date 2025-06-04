@@ -39,6 +39,43 @@ Data from source system goes to DW through ETL and then to a BI system for gener
 Extract:
 
 DW has two layers - staging layer and user access layer
+Staging layer is like the landing zone for data coming from source systems but to send data to 
+user access layer we'll have to apply dimensional modeling to transform the data in the right formats.
+
+Types of staging layer - 
+Persistent(the data coming from source system is preserved) and Non-persistent layer(once the data moves to user access layer the data is removed from staging layer)
+
+Transform: Uniformity & Restructuring 
+Common Transformations - 
+  Data Value Unification(values for categorical columns in source and destination systems should be same; eg-   No/N/0)
+
+  Data type and size uniformity - same data type and size of column (eg- varchar(32))
+  De-duplication - if the same data already exists in master table then not adding it again
+  Dropping Columns - removing unnecessary cols
+  Dropping records
+
+Load:
+
+Initial load & Incremental Load
+
+Initial Load - done only once before DW goes live
+Incremental Load - To keep DW updated (data about new customers, modified data, delete data)
+Types of incremental load: append, in-place update, complete replacement, rolling append(maintaining data for a given time period on a rolling basis; eg- weekly data updates to maintain 24 month data)
+
+Fact and Dimension Tables -
+
+Fact table: some kind of measurement(eg- trnx, sales, orders data)
+Dimension table: adds context to data in fact table(eg - customers, time, product, stores data)
+Fact tables will have foreign keys to PK in dimension tables to add context
+
+How to build fact table?
+
+
+
+
+
+
+
 
 
 
