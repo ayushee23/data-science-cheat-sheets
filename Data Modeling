@@ -64,12 +64,155 @@ Types of incremental load: append, in-place update, complete replacement, rollin
 
 Fact and Dimension Tables -
 
-Fact table: some kind of measurement(eg- trnx, sales, orders data)
+Fact table: some kind of measurement(eg- trnx, sales, orders data); stores measurable data usualyy numbers and connects to dimensions table for context info
 Dimension table: adds context to data in fact table(eg - customers, time, product, stores data)
 Fact tables will have foreign keys to PK in dimension tables to add context
 
 How to build fact table?
 
+Understanding business context, needs, the analysis they want and the data they have
+grain/granularity - level of details present in the fact table; more granularity is important so that the tables can answer questions but it also increases storage used
+
+Identify the dimensions - Based on granularity, we can decide on different dimensions
+
+Identifying the facts - based on grains
+
+Derived fact - columns derived from other columns; increases data size; Better to create views to see data with derived columns
+
+Types of fact in fact table:
+additivity - to add
+
+Three types of facts: 
+additive(can add fact/column along any dimension)  - 
+Facts (numbers) that can be added across all dimensions (like time, product, store).
+🍭 Example:
+You sold 100 candies on Monday, 200 on Tuesday → You sold 300 total.
+🟢 Use: Sales revenue, quantity sold, profit.
+
+semi-additive(can add along some dimension) -
+You can add these across some dimensions (like product or store) but not time.
+🍭 Example:
+If you have 50 candies in stock today, and 50 tomorrow, you don’t have 100 total – it’s still 50 at a point in time.
+🟠 Use: Inventory, account balance, daily stock.
+
+non-additive(cannot add along any dimension) -
+
+You can’t add it at all.
+🍭 Example:
+You calculate a customer satisfaction score. You can’t just add those scores across days or customers.
+🔴 Use: Ratios, percentages, rates (e.g., conversion rate, average score).
+
+
+
+
+Types of fact table:
+Transaction fact table - stores records at the most granualar level with one record per trxn; each record gives details of transaction; 1 record per trnx// data captured at PoS
+
+Periodic Snaposhot fact table - Captures data at regular intervals (daily, monthly) to track change over time. Example: Daily balance of a bank account, monthly subscriptions. Usually semi-additive: You can sum across accounts but not time.
+
+
+
+Accumulating Snapshot fact table - Tracks the lifecycle of a process (start → intermediate → end).
+Example: Order fulfillment – order placed, packed, shipped, delivered. Useful for processes with definable steps.
+
+Factless fact table - Tracks events without numeric/measurable data, just foreign keys to dimension tables.
+doesn't contain any fact columns; cols linking different dimensions to add context and find relationships(eg: table containing dateId, prodId, storeId, promoId)
+Example: To track which customers signed up for promotions,
+
+Aggregate Fact table - Stores pre-aggregated data to improve performance. Used to speed up reporting when raw data is too large. Example: Total daily sales by product category.
+
+
+Date Dimension table -
+What should be the frequency of records in date dim table? Daily is most frequently used.
+
+Product Dimension table - 
+
+Types of Dimensions:
+
+conformed dimension - A dimension that is used across multiple tables or reports the same way.
+🧸 Example: "Date" dimension used in both sales and inventory reports — always means the same thing.
+✅ Ensures consistency in reporting.
+
+Role Playing dimension - A dimension that plays multiple roles in a model. Same dimension used in different roles(makes joining easier especially when using accumulated snapshot fact table).
+🧸 Example: The same Date table used as Order Date, Ship Date, and Return Date in the same report.
+
+Junk dimension - Stores low-cardinality attributes into a single table to avoid cluttering the fact table. Adding these low-cardinality columns to the fact table will waste storage space(cols like payment mode - cash/card, promo applied - yes/no) and creating different dim tables for such columns will increase the number of small tables, complicating queries. So we create a junk dim table to store all combinations of such low cardinality columns. 
+
+Degenerate dimension - A degenerate dimension is a dimension key stored in a fact table without a corresponding dimension table.
+📌 Example: Order_ID in a sales table — no need for a separate order dimension since the detail is already in the fact.
+
+Slowly Changing Dimension(SCD) - SCDs track changes to dimension data over time. They help maintain historical accuracy in reporting (e.g., tracking where a customer lived when they made a purchase).(To cater to changes in data in dimension table)
+SCD0 - data that never changes(eg- DOJ)
+
+SCD1 - updating changed data in-place/overwrite but we won't have historical record of the change(creates report mismatch when checking past data since some info has been overwritten)eg - address change
+
+SCD2 - Maintains history of any changes by adding additional fields like ststus, start_date, end_date; adds new row of latest data and updates the older record
+
+SCD3 - generally used for specific cases like tracking progress after some change(eg - how are employees performing after changinf department). We'll update the new department name and add additional column for storing previous department(prior_department)
+
+
+Can you combine SCD Type 2 and Type 3 in one model?
+🟢 Answer:
+Yes, in complex situations you might use Type 2 for full history and also include Type 3 columns for quick access to recent values.
+📌 Example: Store full address history (Type 2) + a "Previous Address" column (Type 3).
+
+
+
+
+
+
+
+Star & Snowflake Schema
+
+Star schema - A central fact table connected directly to denormalized dimension tables
+✅ Advantages:
+Simpler to understand and query.
+More storage space due to  denormalized dim tables but faster query performance due to less joins
+Better performance in Power BI due to fewer joins.
+Ideal for BI/reporting tools.
+
+❌ Disadvantages:
+Data redundancy (some duplicate data in dimensions).
+Not great for highly normalized databases.
+
+Snowflake schema - Similar to star schema, but dimension tables are normalized into multiple related tables.
+✅ Advantages:
+Saves storage by reducing redundancy.
+Better for data warehousing and data integrity(maintain data integrity via normalization)
+
+❌ Disadvantages:
+Slower query performance (more joins).
+More complex data model for end users.
+Not optimal for Power BI visuals unless optimized carefully.
+
+How do star and snowflake schemas affect dashboard performance?
+Answer:
+
+Star schemas perform better in Power BI because of fewer joins and simpler relationships.
+
+Snowflake schemas can slow down queries due to multiple joins and complex relationships, which impacts refresh and load times.
+
+Can Power BI handle snowflake schemas well?
+Answer:
+Yes, it can — but it's not optimal.
+You'll need:
+Careful use of Power Query to flatten/join tables
+Extra performance tuning
+Possibly denormalizing in Power Query or during ETL to get back to a star-like shape
+
+Business/Natural key - A natural key is a field that already exists in your source data and can uniquely identify a row. It has a business meaning.
+Surrogate key - A surrogate key is an artificial, system-generated identifier — usually a number — with no business meaning.
+Pros:
+Immutable and unique
+Efficient for joins (especially in large tables)
+Doesn’t change with business data
+
+❌ Cons:
+Adds an extra column
+Requires transformation logic (e.g., during ETL)
+Not human-readable
+
+ 
 
 
 
