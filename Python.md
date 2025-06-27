@@ -32,3 +32,24 @@ Dictionary Comprehension
 
 {key:dict[key]+100 for key in dict} // increase all values by 100
 {dict[key]+100 if key!='xyz' else dict[key] for key in dict}
+
+
+
+Tuples
+
+- tuple is ordered and immutable(cannot be changed)
+- x = (1, 2, "abc", True)
+- Some functions - count(val)-- return num of occurrence of that value, index(val) -- returns index of the first occurrence of value, + to add two or more tuples
+
+
+Set
+
+- unordered, immutable, cannot contain duplicate values, {} used to define a set but holds singular values instead of pairs in dict
+- To create an empty set, set() 
+- Use od sets in Maths - AUB, AnB, A-B/B-A, A symmetric difference B(removes common elements)
+- Methods - a.union(b), a.intersection(b), a.isdisjoint(b), a.difference(b), add(val), remove(val), discard(val) -- remove gives error if val not present, discard doesnt give error
+
+
+String
+
+- ord(char) -- gives ASCII value for the character, count(char) -- return num of occurrences of character, 97-122(a-z), 65-90(A-Z), chr(ascii_val) -- returns the character with that ASCII, replace(old, new), 
