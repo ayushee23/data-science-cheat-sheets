@@ -1,5 +1,6 @@
 Resources - https://aakashgupta.medium.com/system-design-for-product-managers-8557aa4b7646
 https://www.news.aakashg.com/p/system-design-interview?utm_source=medium
+https://www.youtube.com/watch?v=iiR6DY1w3jI
 
 System design interviews for engineers are about how to build. For PMs, they’re about why and what to build.
 Understand how the underlying systems tie together, why they are used and tradeoffs; everything should support user needs and business goals
@@ -100,7 +101,7 @@ The CDN edge server (e.g., Cloudflare, Akamai) checks if it has a cached copy of
   Cache Miss 🔴: It needs to fetch it from your origin infrastructure.
 If the CDN doesn’t have the content cached it sends the request to your Load Balancer (e.g., AWS ELB, NGINX).
 The Load Balancer distributes traffic across multiple application servers to avoid overloading any single one.
-Your backend processes the request. It might fetch data from the cache or database, then returns a response.
+Your backend processes the request. It might fetch data from the cache(redis) or database, then returns a response.
 Response travels back: App Server → Load Balancer → CDN → User
 The CDN may cache it for future users.
 
