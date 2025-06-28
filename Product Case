@@ -1,1 +1,49 @@
+Resource - https://www.youtube.com/watch?v=QJat_nicj9c&list=PLY1Fi4XflWSvtu963rZpfH6WeX54vSrDW
+
+CLARIFY -- Understand the problem so that you and the interviewer are on the same page. Ex- what is the goal of a feature/product?, how does a particular feature work?, what data do we have to support a finding? 
+
+Ask time to structure your answer
+
+Measure a Success Type Questions-
+Examine metrics to see which features are resonating with the users, what's working, and shortcomings
+
+Understanding pros and cons of each metric - while conversion rate can evaluate the impact of a specific feature, it might capture the full picture on user engagement and satisfaction. You may need to use a combination of metrics to understand success of a product.
+
+FRAMEWORK
+STEP 1 - Clarify function and goal of the product/feature
+         What it does?How is it used? Who is it for?
+STEP 2 - Define the metrics to measure it (upto 3 metrics)
+         2 success metrics - DAU, conversion rate, number of bookings
+         1 guardrail metric(metric that should not degrade in pursuit of a new feature) -                     cancellation rate, bounce rate
+         (good metrics should fit the context, should be easy to measure, provide a time threshold(eg- avg number of posts per user per day)
+
+A/B Testing questions - 
+looking at driver metrics, guardrail metrics, and cost to determine whether the proposed change is effective or not
+
+Diagnose a Problem Question -
+
+You are given a scenario that one of the metrics has shifted in a negative direction and you have to figure out the root cause of the issue
+There could be multiple reasons for a problem so prioritizing which one to look at first and later is important. 
+FRAMEWORK
+STEP 1 - Clarify the definition of the scenario and metric
+STEP 2 - Did it happen suddenly or progressively? To understand if there is a temporal factor to this. This can help figure out if it was due to internal reasons(production bug, issues with data collection or data source) or external reasons such as seasonality, industry trend, competitors, special event, natural disaster
+STEP 3 - Whether other products or features are experiencing the same? Any change to the product line?
+STEP 4 - Segment by user demographics and behavioral features (region, languages, platforms - ios/android) If the change was applicable to only a certain segment or a certain segment is affected by it
+STEP 5 - Summarize the approach - most reasonable causes + how to fix
+
+(For metrics with an average, consider checking the data to check for any outlier that might skew the metric)
+
+
+Launch OR Not - you are asked how to test a product idea or whether to launch a product/feature
+questions like - how would you test if a proposed change is effective or not/ an idea is good or not
+You have to give a recommendation on whether you will launch or not.
+
+FRAMEWORK
+STEP 1 - Clarify goal and define metrics(similar to measure success)
+STEP 2 - Design an experiment - how to design it?hwo to split the users? how long to run it?
+STEP 3 - Recommendation based on experiment result
+         Link experiment results to the goal and business impact (eg - what does 0.01% lift in                conversion rate transalate to revenue?)
+         Conflicting results (eg - increase in DAU but also increase in bounce rate)
+         Short term Vs Long term (eg - launch brings in more users to the platform thus benefits may          outweigh drawbacks)
+
 
