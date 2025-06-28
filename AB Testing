@@ -1,0 +1,41 @@
+Resource - https://www.youtube.com/watch?v=VOuP3mNDQZ0&list=PLY1Fi4XflWSvgsaD9eXng6N5kxcMtcxGK
+
+Common A/B Testing questions - Design, Sample Size & Tesy Duration, Causal Inference, Multiple Testing, Launch Decision
+
+Designing an A/B Test involves selecting the right metrics, the right randomization units, calculating the sample size and test duration, as well as determining the minimum detectible effect.
+
+An A/B test is an experiemnt where all elements are constant except one variable. Typically, we comapre a control group against test group. All variables are identical between the two groups except for one which is being tested. 
+
+Different versions of a product are called variants
+When there are two variants it is called A/B Test. More than 2 variants - A/B/N Test
+
+The goal of running an A/B test is to make data-driven decisions only when the results are reliable and reproducible
+To make the results reproducible an important requirement is that the factor we rae testing is the cause of the change in the metric. change to product -> change to metric
+So when we launch the feature to the wider audience the impact can be predicted based on the treatment effect seen in the experiment 
+
+A/B tests(randomized controlled experiment) are the best way to establish causality with high probability
+
+5 major steps in running an A/B Test - 
+
+STEP 1: Prerequisites  
+        - Before running an experiment few things have to be ready:
+          We need to define the key metrics to measure the goal of the metric - Overall Evaluation             Criteria(it should be agreed upon by different stakeholders and should be practically                measured)
+        - Changes should be easy to make
+        - Have enough randomization units - to be assigned to different variants. Most commonly used           randomization unit is user. Recommendation is have 100s because the larger the sample size           the smaller the effects can be detected
+
+STEP 2: Experiment Design
+        - What population of randomization units should be select? Do we want to target a specific             population or all users? Sometimes its useful to run experiments only on a certain segment           because the change affects only to that segment(eg - geography)
+        - Size of an experiment: We need to compute the sample size for the experiment in order to             achieve the required statistical power
+        - How long to run the experiment? We'll need to consider seasonality, day of week effect,              primacy and novelty effect(all of this will influence how long the experiment is run)
+Step 3: Running Experiment
+Step 4: Result to Decision
+        - After running the experiment for the required duration, we'll check and interpret the                results and use them to make the decision. 
+          First step is to do sanity checks to make sure the data is reliable. We continue with                analysis once the sanity checks are passed. If it fails, we discard the result and look              into root cause and we may need to re run the experiment. 
+          If the test is passed, we make decision based on - 
+          Tradeoffs between different metrics, cost of launching a change(new change may introduce             complexity and bugs to the code base and and maintenance can be costly, opportunity                  cost(the time and effort we spend launching a change might not be as much as the                     opportunity cost of giving up a different idea). 
+
+          When costs are high we have to ensure that the benefits outweigh the costs. We set a                 practical significance boundary to reflect those costs and we only launch a product if the           result is significant. 
+          When costs are low, we launch any positive change as long as the results are statistically           significant.
+
+Step 5: Post-Launch Monitoring
+          We need to monitor the long-term effect after launch because the short-term effect can be            different from long-term effect due to different reasons
