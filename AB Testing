@@ -39,3 +39,61 @@ Step 4: Result to Decision
 
 Step 5: Post-Launch Monitoring
           We need to monitor the long-term effect after launch because the short-term effect can be            different from long-term effect due to different reasons
+
+
+
+What metrics to select?
+
+Three kinds of operational metrics that companies use to measure success, progress, and areas of improvement-
+
+Goal metric/Success/True North/OKR/Primary metric - reflects a company's long term vision and always ties to a company's mission. They are a small set of metrics that a company truly cares about. Simple to communicate to stakeholders. It should also be stable over a long period of time to allow the organization to work towards improving it. They may be critcal to measure the overall success of the company, they may not eb suitable to measure the success of an experiment as they might be difficult to measure or may not be sensitive enough to product changes 
+
+Driver metric/surrogate/indirect/predictive metric - are often used to measure short term objectives. They align with the goal metrics but are more sensitive and actionable to be able to make major short-term progress and drive teams to work on it. Therefore, better than goal metrics for A/B testing.  
+
+Guardrail metric - guard us from harming the business and violating important experiment assumptions. They can be split into two -
+organizational guardrail metrics: If this metric shifts in negative direction, the business suffers significant loss. Eg- page load latency(commonly used), errors per page, client crashes
+Trustworthy related metrics - they are used to monitor the trustworthiness of an experiment that is to check if there is any violation of assumptions eg - randomization units assigned to variants are truly random(sample mismatch ration - numbers assigned to the variants are different. Perform t-test or chi-test to check if the assignment ratio matches with what was designed. 
+
+A good metric should be simple, easy to understand, clear so that there is no abiguity in interpretation, actionable
+
+Formulating metrics for online experiment - 
+
+3 attributes of metrics that can be used for A/B tests:
+Measurable - should be able to calculate the metric with the data collected during the experiment period
+Attributable - we should be able to attribute the metric values to the experiment variant, meaning we should be able to calculate metrics for different variants independently. 
+Sensitive and Timely - metrics should be sensitive enough to detect changes in a timely manner
+
+In online experiments we select a few driver metrics and a few guardrail metrics to monitor impact on other aspects of the business
+
+Combine a few driver metrics into an Overall Evaluation Criterion(OEC) - weighted combination of driver metrics 
+No more than 5 driver metrics
+Having too many metrics may confuse people and may lead to ignoring the key metrics. It may also affect the decision-making process and increases the chances of having a false discovery
+
+For interviews, understand the goal of the experiment and then think of metrics that focus on measuring that. Another thing is to focus on metrics tracking the difference in user experience between both variants. 
+How to make a launch decision when one metric goes up and one metric goes down?
+Have to consider tradeoffs between different metrics
+eg - user acquisition & revenue
+Such decisions are to be discussed with all stakeholders to come to a decision
+
+
+Randomization Unit - 
+
+who/what we assign randomly to each variant; what we select as randomization unit impact user experience and metrics used
+UserID is the most common - consistent user experiment and allows for long-term measurements
+Others can be cookie(can identify users without logging in but dont persist across browsers and platforms, temporary as they can expire or cleared by users), device ID(immutable ID associated with mobile phones so commonly used for changes in mobile app), event such as page view/session(doesn't require user to log in, each page view is a separate randomization unit, doesn't distinguish between users; similarly sessions generally expire after 30-mins of inactivity, one user can be assigned to different variants). Since number of events is always higher than number of users, using events gives us more power to detect small changes but it can also lead to inconsistent user experience so if the change is visible to users it is better to not use event as the randomization unit.
+
+Considerations when choosing randomization units - 
+Consistent user experience(for any design changes we use user ID or cookie as randomization unit). In experiments where users aren't logged in, we often use cookies as the randomization unit. On the first visit, we assign the user to a variant and store it in a cookie so the experience stays consistent across sessions. It’s great for A/B testing design or layout changes and works especially well for anonymous traffic. The trade-off is that it’s device/browser-specific, so the same user on two devices might be treated as two users.
+
+If the change is not visible to users the n the randomization unit will depend on what we want to measure. Eg - website performance changes, changes to backend algorithm
+
+Another thing to consider is the coarseness of the randomization  unit and unit of analysis(what you are measuring like page views, clicks). If the ran. unit is too broad(eg-region/company) an you are measuring usrr level behavior the results will be misleading. Rule is to always randomize at the same level or finer level than unit of analysis.
+
+If we randomize using a coarser unit, like location, but analyze at a finer level like user clicks, the results might be biased because group differences can come from the randomization unit itself, not the experiment.
+
+How to estimate Sample Size?
+
+sample size ~ 16*(sample variance)/(delta)**2; where delta is difference between control and treatment
+We can use two-sample t-test to determine if the difference between two populations is statistically significant
+
+
