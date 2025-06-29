@@ -7,13 +7,179 @@ Average dwell time = (Total idle time at location) / (Number of shipments/assets
 For metrics question, think about -
 
 Structured Approach (Categories):
-
 Adoption/Reach: How many users are using it? (e.g., Feature activation rate, # active users of feature).
-
 Engagement/Usage: How are they using it? How frequently? How deeply? (e.g., Time spent on relevant dashboard, # of interactions, # of custom rule configurations).
-
 Effectiveness/Quality: Is the feature working as intended? Is it providing accurate and valuable output? (e.g., Anomaly detection precision/recall, Time to detection, False positive/negative rates).
-
 Impact/Outcome: What are the business and user outcomes? This is often the most important category for Chorus View. (e.g., Reduction in spoilage/damage claims, On-time delivery improvement, Reduction in manual investigation time, Customer retention, NPS for feature).
-
 Health/Performance: Is the feature stable and performant? (e.g., API latency, Uptime, Error rate).
+
+
+Beyond general product metrics, be familiar with common supply chain KPIs and how Chorus View's data could influence them:
+
+On-Time Delivery Rate / Perfect Order Rate: How does real-time visibility and anomaly detection improve this?
+Inventory Accuracy / Inventory Turnover: How does remote inventory management (using their sensors) impact this?
+Lead Time Reduction: How does proactive anomaly resolution speed up processes?
+Cost of Goods Sold (COGS) / Operational Costs: How do reductions in spoilage, theft, and manual effort affect costs?
+Asset Utilization: How does tracking asset movement improve their usage?
+
+
+
+could you please walk me through a complex technical product feature you've worked on, from conception to launch? What was your role, what were the key technical challenges, and how did you measure its success?
+
+At 1MG Healthcare, a significant challenge we faced was 
+losses due to product expiry and stockouts, particularly for fast-moving items like supplements and OTC medicines. Our existing supply chain relied on static reorder rules, which weren't dynamic enough to handle real-time demand shifts, leading to inefficiencies – either excess stock causing expiries or stockouts frustrating customers.
+My key task as a Senior Product Analyst was to 
+design and implement a demand forecasting model to provide the supply chain team with better, data-driven restocking decisions, with the ultimate goal of reducing these losses.
+For the conception phase, I started by deeply analyzing our existing inventory and sales data. Through exploratory data analysis, I confirmed that unpredictable demand was indeed a major culprit for our losses. I then collaborated closely with the supply chain and product teams to understand their operational workflows and define the precise requirements for the forecast – what level of granularity (product-level), what look-ahead window (7-day forward sales), and how they would consume the output.
+
+The key technical challenges involved:
+
+Data Consolidation and Quality: Our transaction, product, and user data resided in disparate systems, requiring significant effort to consolidate and ensure data quality and consistency for model training. I utilized SQL and Python for this.
+
+Feature Engineering for Time-Series: Crafting effective features was crucial. This included not just rolling sales averages but also external factors like promotion flags, and inherent product characteristics like shelf life and fragility, which needed careful extraction and transformation.
+
+Model Performance and Scalability: I trained an XGBoost model in Python to predict 7-day forward sales at the product level, optimizing for RMSE. A challenge was ensuring the model could refresh weekly and make predictions for hundreds of thousands of SKUs efficiently.
+
+Integration into Business Flow: Ensuring the model's output was truly actionable meant integrating it seamlessly. I designed and automated an 
+
+Airflow pipeline for weekly model retraining and prediction generation , and then pushed the actual vs. predicted data to a 
+
+Tableau dashboard. This dashboard was critical; it allowed the supply chain team to visualize forecasts, identify potential issues, and adjust their reorder rules based on real-time insights rather than static rules.
+
+Post-launch, we meticulously measured success. Our primary lagging indicator was the reduction in overstocking and expiry-related losses, which we tracked through inventory valuation reports. Over the next three months, we saw a 
+
+20% reduction in these losses, which was a significant impact for the business. As leading indicators, I tracked model prediction accuracy (RMSE, MAPE) weekly, and closely monitored inventory turn rates for forecasted products. The positive feedback from the supply chain team led to the model being extended to include more product categories, validating its value and scalability."
+
+ "You mentioned data consolidation and quality as a challenge. Can you give a specific example of a data quality issue you encountered and how you resolved it?"
+
+Your Sample Answer:
+"Certainly. One significant data quality issue we faced during the demand forecasting project was with our product master data, specifically around product categories and unique identifiers. We had data from multiple legacy systems – an inventory management system, an e-commerce platform, and a point-of-sale system – each with its own way of classifying products and sometimes even using different SKUs or internal IDs for the same physical product. This meant that a 'Vitamin C Supplement' might be labeled inconsistently, or even have duplicate entries, across datasets.
+
+This was a major challenge because accurate product-level sales forecasting relied on a clean, unified view of each product. To resolve this, my first step was to perform extensive exploratory data analysis to quantify the extent of the inconsistency. I used SQL and Python to identify discrepancies and build fuzzy matching algorithms to link similar product names or attributes.
+
+Then, working closely with the engineering and operations teams, we established a master product catalog and implemented a data deduplication and standardization process within our ETL pipelines using dbt. This involved creating a canonical product ID and mapping all historical data to it. This cleanup was foundational; without it, our demand forecasting model would have been training on noisy, inconsistent data, leading to inaccurate predictions and ineffective restocking decisions."
+
+
+You talked about automating the model refresh with Airflow. Can you briefly describe the pipeline architecture you set up? What were the key stages, and how did you ensure its reliability?
+
+Certainly. Operationalizing the demand forecasting model was critical for its continuous value. We designed an end-to-end automated pipeline using Apache Airflow to manage the weekly model refresh and prediction generation.
+
+The key stages in the pipeline were:
+
+Data Extraction (ETL - Extract):
+
+Source Data Pulls: Airflow orchestrated tasks to pull raw transaction, product master, and promotional data from various sources (e.g., our data lake, possibly a transactional database). We used SQL queries and Python scripts for this.
+
+Data Validation: Initial checks were performed here to ensure data completeness and basic integrity before further processing.
+
+Data Transformation (ELT - Load & Transform, often using dbt):
+
+Feature Engineering: This was a major stage. All the time-based and external factor features we discussed earlier were computed and prepared here using dbt models and Python scripts. This ensured consistency and reusability of our feature logic.
+
+Data Aggregation: Aggregating sales data to the product-level and 7-day windows was done in this stage.
+
+Data Loading: The transformed, feature-rich data was then loaded into a dedicated analytics database (e.g., a BigQuery or Snowflake table) optimized for model training.
+
+Model Training & Prediction:
+
+Model Refresh: An Airflow task triggered a Python script that loaded the latest prepared data, retrained the XGBoost model, and then generated 7-day forward predictions for all relevant SKUs.
+
+Prediction Storage: The new predictions were then stored in a separate 'forecasts' table in our analytics database.
+
+Reporting & Monitoring:
+
+Dashboard Refresh: Once predictions were available, Airflow triggered the refresh of our Tableau dashboards, ensuring the supply chain team always had the latest forecasts.
+
+Pipeline Monitoring: Alerts were set up within Airflow to notify me and the engineering team of any task failures, data load issues, or unusually long run times. We also used custom Python scripts to log model training metadata (e.g., RMSE for the current run) to track performance over time.
+
+To ensure reliability, we implemented:
+
+Idempotent Tasks: Designing tasks so they could be re-run without causing duplicate data or errors.
+
+Retry Mechanisms: Airflow's built-in retry logic for transient failures.
+
+Dependency Management: Strict task dependencies in Airflow to ensure stages only ran once their upstream dependencies were successful.
+
+Versioning: All our dbt models and Python scripts were version-controlled using Git, ensuring traceability and easier debugging.
+
+This automated pipeline significantly reduced manual effort and ensured the supply chain team consistently received fresh, accurate forecasts, moving away from the static rules they previously relied on.
+
+
+How did you handle the seasonality or external factors (like promotions) in your XGBoost model? Did you explicitly engineer features for them, or did the model pick them up naturally?"
+
+Your Sample Answer:
+"For demand forecasting, both seasonality and external factors like promotions are absolutely critical. We explicitly engineered features for them rather than relying solely on the model to infer them, as this tends to lead to more robust and interpretable predictions.
+
+For seasonality, I created various time-based features:
+
+Day of Week, Week of Year, Month, Quarter: These helped capture weekly, monthly, and quarterly patterns in sales.
+
+Public Holiday Flags: Binary flags indicating if a particular day was a public holiday or immediately preceded/followed one, as these often influence consumer purchasing behavior.
+
+For promotional activities, which are significant external drivers, we engineered features such as:
+
+Promotion Flag: A binary indicator if a product was on promotion.
+
+Promotion Type: Categorical feature (e.g., 'Discount', 'Buy One Get One Free').
+
+Promotion Intensity: A numerical value representing the percentage discount or other measure of promotional strength.
+
+Days Since Last Promotion: To capture lingering effects.
+
+We then fed these engineered features directly into our XGBoost model. XGBoost is excellent at handling complex interactions between features, so by providing these explicit signals, we allowed the model to leverage these patterns effectively, leading to much more accurate forecasts that accounted for these critical demand fluctuations.
+
+
+
+
+
+
+
+How would you define the key product metrics to measure the success of this new 'Real-time Asset Condition Monitoring' feature? Please walk me through your thought process and the specific metrics you'd consider, and why each is important.
+
+
+the primary goal of the 'Real-time Asset Condition Monitoring' feature is absolutely to optimize perfect deliveries by proactively preventing condition-related spoilage, damage, or quality degradation, especially for sensitive goods. It's about ensuring goods arrive in the expected condition, which directly impacts customer satisfaction and reduces losses.
+
+My thought process for defining success metrics would be structured around a few key categories, mirroring the user journey and the feature's lifecycle:
+
+1. Adoption & Setup Metrics:
+* Feature Activation Rate: Percentage of eligible customers/assets that have enabled and configured condition monitoring.
+* Why important: This is the foundational metric. If users aren't even turning it on, it can't deliver value. A low rate might indicate a poor onboarding experience or lack of perceived value.
+* Number of Monitored Assets: Total count of unique assets actively being monitored.
+* Why important: Shows the scale of usage and potential impact.
+* Threshold Customization Rate: Percentage of users who customize their condition thresholds (vs. using defaults).
+* Why important: Indicates deeper engagement and that users are tailoring the feature to their specific needs, suggesting higher perceived value.
+
+2. Engagement & Interaction Metrics:
+* Alert Generation Volume: Total number of alerts triggered by condition deviations.
+* Why important: Measures the feature's activity. Too few might mean thresholds are too loose; too many might indicate sensitivity issues or alert fatigue.
+* Alert-to-View Rate: Percentage of generated alerts that are viewed by users within the dashboard or via email.
+* Why important: Measures basic engagement with the notifications.
+* Alert-to-Action Rate: Percentage of viewed alerts that lead to a specific user action (e.g., acknowledging the alert, initiating an investigation, contacting a driver, rerouting, adjusting environmental controls).
+* Why important: This is crucial. It measures the actionability of our alerts. If alerts aren't leading to actions, they aren't solving the core problem. This could be tracked by users clicking an 'Acknowledge' button, opening related asset details, or interacting with a 'Resolve' workflow.
+* Time Spent on Condition Monitoring Dashboards: Average time users spend reviewing conditions, trends, or past alerts.
+* Why important: Indicates user interest and reliance on the data provided by the feature.
+
+3. Feature Effectiveness & Quality Metrics:
+* Anomaly Detection Accuracy (Precision & Recall):
+* Precision: Of all detected deviations, how many are actual deviations (true positives)? This minimizes false positives, which can lead to alert fatigue and erode trust.
+* Recall: Of all actual deviations that occurred, how many did our system detect? This minimizes false negatives (missed critical events), which can be very costly for sensitive goods.
+* Why important: These are critical for the reliability and trustworthiness of the system. Too many false positives and users will ignore alerts; too many false negatives and the feature fails to prevent issues.
+* Time to Alert Delivery: Average latency from a condition deviation occurring to the alert being received by the user.
+* Why important: For 'real-time' monitoring, speed is critical for timely intervention.
+
+4. Business Impact & Outcome Metrics:
+* Reduction in Condition-Related Losses: This is a key lagging indicator. Quantify the decrease in spoilage, damage claims, or quality degradation incidents specifically attributable to condition deviations (e.g., comparing historical rates for monitored assets vs. non-monitored or before/after).
+* Why important: Directly measures the feature's financial value and problem-solving capability.
+* Improvement in 'Perfect Delivery' Rate for Monitored Assets: Percentage of monitored shipments that arrive within all specified conditions (temperature, humidity, no shock events) and are delivered on time and complete.
+* Why important: Directly aligns with the high-level goal you identified, demonstrating that goods are arriving in optimal condition.
+* Reduction in Manual Quality Checks/Interventions: If the system is proactive, it should reduce the need for manual checks or reactive interventions.
+* Why important: Measures operational efficiency gains for the customer.
+* Customer Satisfaction (CSAT/NPS) related to Asset Condition Monitoring: Specific survey questions about the feature's value and ease of use.
+* Why important: Direct user feedback on perceived value.
+
+My initial focus would be on Adoption & Engagement to ensure the feature is being used, followed immediately by Alert-to-Action Rate and Anomaly Detection Accuracy (balancing Precision & Recall), as these directly measure if the feature is working and providing actionable value. The ultimate Reduction in Losses would be the lagging North Star metric we'd track over time.
+
+
+
+Given Chorus View's focus on real-time data and actionable insights in supply chain management, what are your thoughts on data governance and data quality in the context of defining and trusting these product metrics? How would you ensure the data feeding your metrics is reliable?
+
