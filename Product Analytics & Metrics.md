@@ -102,3 +102,11 @@ You can measure activation rate alone, for instance. However, if you don’t als
 acquired users to activated customers, it can be easy to miss an opportunity to make onboarding more efficient.
 That oversight would mean it’s taking longer to show users value, making it more likely they will churn.
 
+Understand the difference between the two
+⭐ Lagging indicator:
+
+Shows the result after it happens.
+
+⭐ Leading indicator:
+
+Helps you predict the result before it happens.
