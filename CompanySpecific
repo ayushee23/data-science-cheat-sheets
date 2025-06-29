@@ -1,1 +1,19 @@
+Chorus View builds an AI-driven platform to give companies real-time visibility and intelligence about where their goods are and what condition they’re in, as they move through the supply chain.
 
+Chorus View mission - Bridge the visibility gap in supply chains
+
+Average dwell time = (Total idle time at location) / (Number of shipments/assets)
+
+For metrics question, think about -
+
+Structured Approach (Categories):
+
+Adoption/Reach: How many users are using it? (e.g., Feature activation rate, # active users of feature).
+
+Engagement/Usage: How are they using it? How frequently? How deeply? (e.g., Time spent on relevant dashboard, # of interactions, # of custom rule configurations).
+
+Effectiveness/Quality: Is the feature working as intended? Is it providing accurate and valuable output? (e.g., Anomaly detection precision/recall, Time to detection, False positive/negative rates).
+
+Impact/Outcome: What are the business and user outcomes? This is often the most important category for Chorus View. (e.g., Reduction in spoilage/damage claims, On-time delivery improvement, Reduction in manual investigation time, Customer retention, NPS for feature).
+
+Health/Performance: Is the feature stable and performant? (e.g., API latency, Uptime, Error rate).
