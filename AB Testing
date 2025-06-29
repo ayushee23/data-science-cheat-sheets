@@ -1,4 +1,5 @@
 Resource - https://www.youtube.com/watch?v=VOuP3mNDQZ0&list=PLY1Fi4XflWSvgsaD9eXng6N5kxcMtcxGK
+https://www.youtube.com/watch?v=DUNk4GPZ9bw
 
 Common A/B Testing questions - Design, Sample Size & Tesy Duration, Causal Inference, Multiple Testing, Launch Decision
 
@@ -61,8 +62,8 @@ Formulating metrics for online experiment -
 
 3 attributes of metrics that can be used for A/B tests:
 Measurable - should be able to calculate the metric with the data collected during the experiment period
-Attributable - we should be able to attribute the metric values to the experiment variant, meaning we should be able to calculate metrics for different variants independently. 
-Sensitive and Timely - metrics should be sensitive enough to detect changes in a timely manner
+Attributable - we should be able to attribute the metric values to the experiment variant, meaning we should be able to calculate metrics for different variants independently(meaning can you assign the effect(change in metric) that you are seeing with the treatment that you have applied). 
+Sensitive and Timely - metrics should be sensitive enough to detect changes in a timely manner; metric should be measurable in a short time
 
 In online experiments we select a few driver metrics and a few guardrail metrics to monitor impact on other aspects of the business
 
@@ -100,3 +101,5 @@ We can use two-sample t-test to determine if the difference between two populati
 
 
 Power - probability of correctly rejecting the null hypothesis when the alternate is true. Likelihood of detecting an effect when the effect is present. The higher the power, the better the test is. It is commonly used to calculate the minimum sample size required to detect an effect.
+
+P-peeking is the mistake of repeatedly checking p-values during an experiment and stopping early when significance is reached. This increases the chance of false positives(Type 1 error). To avoid it, we pre-define test duration or use statistically safe sequential testing methods.
