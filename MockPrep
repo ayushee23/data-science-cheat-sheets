@@ -152,3 +152,15 @@ Our North Star Metric is growing, but revenue isn’t keeping up. How would you 
 I’d start with a data sanity check to ensure our pipelines and events are correct. Then I’d analyze the payment conversion funnel to identify where users may be dropping off—like checkout friction or UI issues preventing payment completion. I’d segment users into new vs returning to see if growth is coming primarily from new users who aren’t yet converting to paid plans. I'd also compare engagement metrics—such as insights consumed and page views—across these groups to check if new users are really getting value or if activation is lagging.
 
 Beyond that, I'd analyze plan mix and pricing—are new sign-ups skewing toward free tiers or discounted plans? I'd look at ARPU trends to see if per-user revenue is declining even with user growth. I’d also review churn rates to see if we’re losing paying customers faster than before. Finally, I’d consider cohort analyses to see if newer user cohorts are monetizing more slowly. By combining funnel, engagement, pricing, and retention metrics, we can pinpoint why user growth isn’t translating into revenue growth.
+
+
+Imagine leadership says:
+“We want to improve user engagement on our insights dashboard.”
+✅ How would you define and measure “engagement” for this use case?
+✅ What specific metrics would you propose tracking?
+
+
+
+First, I’d work with stakeholders—like PMs and business leads—to agree on a clear, shared definition of “engagement” for the insights dashboard. For example, is it simply users visiting the dashboard daily, or actually interacting meaningfully with multiple insights? Once we have that definition, I’d propose tracking core metrics such as DAU (daily active users on the dashboard), WAU, and Stickiness (DAU/MAU ratio) to measure frequency of use. I’d also add depth metrics like average insights viewed per session, time spent on the dashboard, and repeat visits per user. Beyond that, I’d analyze the funnel leading to the dashboard—where users come from, where they drop off—to identify opportunities to improve discoverability and nudge them toward using it. Lastly, I’d include retention metrics (e.g., 7-day or 30-day returning users) to ensure that improvements are driving sustained engagement, not just one-time spikes.
+
+
