@@ -110,8 +110,27 @@ Messaging queue -
 A message queue allows one part of a system to hand off work to another part asynchronously. For example, after a user signs up, the server queues an email job. A worker picks it up and sends the email in the background. This keeps the system fast, scalable, and loosely coupled—especially useful when handling spikes in traffic or slow tasks like notifications, logging, or processing files. Example - Apache Kafka
 
 
+Framework to answer interview questions--
+For these types of system design questions, use this 5-step approach:
 
+1. Clarify scope and goals
+“Who is this for? What questions will it answer?”
+“What are success criteria?”
 
+2. Identify inputs and sources
+“What data do we need? Where does it come from?”
 
+3. Define processing and transformation
+“What transformations, models, or aggregations are required?”
+“How do we clean/validate data?”
 
+4. Choose outputs and delivery
+“How will users consume this? Looker dashboards? Reports?”
+“How often does it update?”
+
+5. Consider non-functional aspects
+Data quality / monitoring
+Documentation
+Ownership / access control
+Scalability
 
