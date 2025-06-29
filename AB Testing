@@ -44,6 +44,7 @@ Step 5: Post-Launch Monitoring
 
 What metrics to select?
 
+Think about what the user journey looks like. The funnel mostly wants to udge/push users to take some actions which when taken will be a success for us. This can help come up with success metrics for the experiment.
 Three kinds of operational metrics that companies use to measure success, progress, and areas of improvement-
 
 Goal metric/Success/True North/OKR/Primary metric - reflects a company's long term vision and always ties to a company's mission. They are a small set of metrics that a company truly cares about. Simple to communicate to stakeholders. It should also be stable over a long period of time to allow the organization to work towards improving it. They may be critcal to measure the overall success of the company, they may not eb suitable to measure the success of an experiment as they might be difficult to measure or may not be sensitive enough to product changes 
@@ -97,3 +98,5 @@ sample size ~ 16*(sample variance)/(delta)**2; where delta is difference between
 We can use two-sample t-test to determine if the difference between two populations is statistically significant
 
 
+
+Power - probability of correctly rejecting the null hypothesis when the alternate is true. Likelihood of detecting an effect when the effect is present. The higher the power, the better the test is. It is commonly used to calculate the minimum sample size required to detect an effect.
