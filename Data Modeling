@@ -212,13 +212,481 @@ Adds an extra column
 Requires transformation logic (e.g., during ETL)
 Not human-readable
 
- 
+
+
+Core stages of a data pipeline
+
+Ingestion layer - collect raw data through APIs, storage buckets, logs, databases
+                  streaming data through kafka; batch static data through Airflow
+Staging layer - store the ingested data as is in a data warehouse or data lake such as snowflake, big query, s3
+processing/transformation layer - Transform data - remove duplicates, data validity, join multiple sources, calculate metrics through SQL transformations, python scripts, dbt
+Transformed Data Storage/analytics storage layer - storing the above transformed tables in analytics DW(such as snowflake, big query)
+Consumption layer - using the above tables, reports generated for dashboards/analytics
+
+We’d ingest real-time sensor data via Pub/Sub into BigQuery raw tables. Airflow would orchestrate these loads along with batch ingestion of static asset metadata. We’d store all raw events in a dedicated staging schema. dbt would transform these into clean, analytics-ready models in BigQuery—like latest asset locations, journey history, and condition anomalies. The transformed tables would feed Looker dashboards where customers see live maps, alerts, and historical trends. Airflow would schedule and monitor the entire pipeline, ensuring freshness and reliability.
+
+
+How would you design an end-to-end analytics system to enable real-time tracking and analysis of asset visibility for our customers? Please walk me through the steps and components you'd include.
+
+
+
+
+1. Goal Clarification:
+First, I’d clarify that our goal is to give customers real-time visibility into where their assets are, their movement history, and their condition (like temperature), so they can proactively manage disruptions.
+
+2. Data Ingestion:
+
+We’d collect real-time streaming data from our proprietary sensors—location, condition, movement events.
+
+Also ingest static reference data like asset metadata, planned routes, customer profiles.
+
+For streaming ingestion, we could use tools like Pub/Sub or Kafka to handle real-time events.
+
+Airflow would orchestrate scheduled batch ingestions for static sources (like ERP or inventory systems).
+
+3. Storage and Raw Layer:
+
+All ingested data lands in our raw data warehouse (BigQuery or Snowflake), partitioned by event time and asset ID.
+
+Raw events are preserved for auditability.
+
+4. Data Validation and Sanity Checks:
+
+Airflow DAGs would include data quality checks: schema validation, missing values, duplicates.
+
+Alerts for ingestion failures or anomalies.
+
+5. Transformation and Modeling:
+
+Use dbt to transform raw sensor data into clean, analysis-ready models.
+
+Key dbt models might include:
+
+Latest location per asset.
+
+Asset journey history (origins, stops, destinations).
+
+Condition monitoring tables (e.g. temperature excursions).
+
+Anomaly detection flags (route deviations, dwell time over thresholds).
+
+Aggregated operational metrics (e.g. average dwell time, on-time delivery rates).
+
+dbt tests would ensure data integrity at each stage.
+
+6. Analytics Storage Layer:
+
+Store transformed models in a separate analytics schema, optimized for dashboard queries.
+
+Materialize frequently used aggregates for performance.
+
+7. Dashboards and Reporting:
+
+Build Looker dashboards for customers to:
+
+See live maps of asset locations.
+
+Monitor condition compliance (e.g. cold chain temperature logs).
+
+Review alerts and anomalies.
+
+Analyze dwell time and movement patterns historically.
+
+Filter by customer, route, time window.
+
+Define standardized metrics so customers see consistent results.
+
+8. Orchestration and Scheduling:
+
+Airflow would manage the end-to-end pipeline:
+
+Trigger streaming jobs.
+
+Schedule dbt transformations.
+
+Refresh dashboard extracts daily or hourly.
+
+Send alerts on pipeline failures.
+
+9. Monitoring and Logging:
+
+Instrument logging for data latency, pipeline failures, data quality alerts.
+
+Include usage analytics for the dashboards to see adoption.
+
+10. Documentation:
+
+Maintain clear data dictionaries, dbt model docs, pipeline diagrams.
+
+Share with engineering and product teams for transparency.
+
+ Airflow handles orchestration monitoring, dbt runs data tests, and logs record all steps for traceability
+
+
+
+Imagine the Summit Dashboard is the primary interface customers use to track their assets. How would you define “user engagement” for this dashboard? What specific metrics would you propose tracking?
+
+
+I’d think about metrics in categories aligned to the user journey:
+
+✅ Adoption:
+
+DAU, WAU, MAU.
+
+Stickiness (DAU/MAU).
+
+% of users who log in at least once per week.
+
+✅ Depth of Engagement:
+
+Average number of assets tracked per user.
+
+Number of journeys or routes reviewed.
+
+Alerts viewed per user.
+
+Alert-to-action ratio (e.g. % of alerts acknowledged or acted upon).
+
+✅ Frequency & Retention:
+
+Sessions per user per week.
+
+Week-over-week returning users.
+
+User retention curves over 30/90 days.
+
+✅ Quality of Engagement:
+
+Time spent on dashboard per session—but paired with active interactions to avoid measuring passive idle time.
+
+User actions per session (clicks, filter uses, map interactions).
+
+✅ Outcome-oriented metrics:
+
+Reduction in unacknowledged alerts.
+
+Customer-reported time-to-intervention.
+
+NPS or satisfaction score specifically for the dashboard.
+
+
+We want to measure ‘asset visibility’ as a core success metric for our customers. How would you go about defining this metric precisely? What would you include in the definition? What potential pitfalls would you watch out for?
+
+First, I'd want to make sure we define “asset visibility” in a way that's meaningful to customers. For them, visibility means knowing where their assets are and what condition they're in, reliably and in near real-time.
+
+I’d define Asset Visibility as the percentage of active assets with accurate, recent location and condition data available in the system.
+
+Specifically, it could be measured as:
+
+Number of active assets with valid location + condition updates within the last 30 minutes, divided by total active assets.
+
+We'd also want to clearly define “active assets” (those expected to be in transit or monitored) and set agreed-upon freshness thresholds with stakeholders.
+
+Pitfalls to watch out for include:
+
+Overly strict freshness windows making the metric look bad even when acceptable.
+
+Sensor outages or network delays skewing results.
+
+False positives from bad data quality.
+
+Different customer use cases (e.g. in-transit vs stored assets needing different update frequencies).*
+
+
+
+
+
+Imagine Chorus View wants to add anomaly detection for shipment conditions (like detecting temperature excursions for perishable goods) and make this data available in our dashboards. How would you design the data pipeline and analytics system to support this? Walk me through the steps you'd take, the components you'd include, and how you'd make sure it's reliable.
+
+
+
+first, I'd clarify that our goal is to give customers early, reliable insights about potential shipment problems, so they can intervene before losses happen.
+
+For ingestion, we'd capture real-time sensor data—like temperature, humidity, and location—via streaming tools such as Kafka or Pub/Sub. For static data like asset metadata and routes, we'd use Airflow to schedule batch ingestions from source systems.
+
+We'd land all raw data in a staging area in BigQuery, preserving it unchanged for auditability. Airflow would orchestrate ingestion and run data sanity checks—verifying schema consistency, required fields, and reasonable value ranges.
+
+In the transformation layer, we'd use dbt to model and enrich this data. Key dbt models could include:
+
+Asset journey table with origin, destination, and timestamps.
+
+Temperature excursions table that flags readings outside safe thresholds.
+
+Route deviation events.
+
+For anomaly detection, we'd define clear business rules or thresholds (e.g. 2–8 °C for refrigerated goods) that dbt models use to generate flags. We'd store anomalies with context like timestamp, asset ID, location, and measured value.
+
+Transformed tables would live in a dedicated analytics schema in BigQuery, optimized for dashboard querying. In Looker, we'd build dashboards that let users:
+
+See total assets tracked.
+
+Identify % with anomalies.
+
+Drill into shipment-level details (what, when, where).
+
+Monitor trends over time.
+
+Airflow would manage the entire pipeline—scheduling ingestion, running dbt transformations, and refreshing BI extracts on a near-real-time cadence.
+
+We'd also build monitoring into Airflow to alert the data team if ingestion fails or if data quality tests fail in dbt. Finally, we'd document models, thresholds, and data definitions in Confluence or a data catalog to ensure transparency and consistency.
+
+This approach ensures customers get reliable, actionable visibility into shipment anomalies to proactively reduce losses.
+
+Imagine you’re the Technical Product Analyst on our team, and you notice there’s a disagreement between engineering and product about how to define an “anomaly” for condition monitoring (like temperature excursions). Product wants stricter thresholds; engineering worries about too many false positives. How would you facilitate alignment and help the team agree on a definition?
+
+First, I'd start by aligning everyone on the shared goal: ensuring the anomaly definition balances catching real risks for customers while avoiding overwhelming them with false alerts.
+
+To move from opinion to evidence, I’d propose doing an EDA (exploratory data analysis) of historical sensor data. Specifically, I'd look at how current thresholds perform in terms of precision and recall. If precision is low, that indicates many false positives—engineering's concern about noise. If recall is low, that indicates false negatives—product's concern about missing true anomalies.
+
+I’d share those findings with both teams, showing real examples of alerts we'd miss or over-trigger. Then, I'd facilitate a discussion about acceptable tradeoffs, given customer needs and operational constraints. For instance, are customers more tolerant of a few extra alerts, or is alert fatigue a real problem?
+
+I’d also propose testing candidate thresholds on historical data or in a limited pilot to see how changes affect alert rates in practice. That way, we can validate assumptions before rolling out.
+
+Finally, I’d help document the agreed-upon definition, thresholds, and rationale in Confluence or our internal documentation. That ensures everyone is aligned, and we have a clear reference for future tuning.
+
+In short, I'd use data to make the tradeoffs clear, bring both teams into the analysis, and facilitate an evidence-based, documented decision.
+
+
+
+
+
+Imagine you’re asked to write a clear, shared definition for our team for “temperature excursion” so it can be used in analytics, engineering, and customer-facing dashboards. How would you go about writing and sharing this definition so everyone is aligned?
+
+
+first, I'd want to make sure we're defining "temperature excursion" in a way that's clear, consistent, and meaningful for both our customers and internal teams.
+
+At its core, for customers, a temperature excursion is any period when a shipment's temperature goes outside the safe range for its product type, risking spoilage or damage. So I'd define it operationally as:
+
+“An excursion event = any reading where an asset’s temperature exceeds its specified safe threshold for storage/transport.”
+
+At the metric level, I'd define:
+
+“% of active assets with temperature excursions = (Number of active assets with at least one out-of-threshold reading in the last 30 minutes) / (Total number of active assets monitored in that period).”
+
+I’d clearly document:
+
+Exact formula, with time window.
+
+Definition of “active assets” (e.g., assets currently in transit and reporting data).
+
+Data sources (sensor logs, asset metadata tables).
+
+Specific temperature thresholds by product type (e.g., 2–8 °C for vaccines, 0–4 °C for dairy).
+
+I’d also note pitfalls to avoid:
+
+Inconsistent thresholds between teams.
+
+Handling missing/late data; sensor outages could skew the metrics.
+False positives from bad data quality
+
+Defining what happens with short-lived spikes (e.g., require sustained deviation?)*
+
+Once drafted, I'd circulate the definition with stakeholders in product, engineering, analytics, and customer teams for feedback. I'd lead a session to make sure everyone agrees and finalize it.
+
+Finally, I’d publish the definition in our internal documentation (like Confluence), version it in our data dictionary, and ensure it's implemented consistently in our dbt models, dashboards, and customer-facing materials. That way, everyone—from engineers writing code to PMs discussing metrics with customers—is using the same, well-defined term.
+
+
+PRD Framework--
+
+1️⃣ Problem: Why do we need this? What’s the user pain?
+2️⃣ Goal: What do we want to achieve?
+3️⃣ Scope: What’s included? What’s not?
+4️⃣ Requirements / User Stories: What do users need to be able to do?
+5️⃣ Success Metrics: How will we know it worked?
+6️⃣ Technical Considerations: Data sources? Integrations? Constraints?
+7️⃣ Risks / Open Questions: What might block us?
+8️⃣ Stakeholder Alignment: How do we get everyone on the same page?
+
+
+How would you write a PRD for a feature like temperature excursion alerts in our platform?
+
+1️⃣ Context / Problem:
+Today, our customers often don’t know when shipments go out of temperature range until it’s too late. This leads to spoilage, loss, and customer dissatisfaction.
+2️⃣ Goal:
+Enable real-time temperature excursion alerts so customers can intervene proactively and reduce losses.
+3️⃣ Scope:
+In scope: Alerts for temperature excursions during in-transit shipments. Dashboard integration to view and acknowledge these alerts.
+Out of scope: Warehouse storage sensors, humidity excursions, SMS/email delivery preferences (for future phases).*
+4️⃣ Requirements / User Stories:
+As a supply chain manager, I want to receive an alert when a shipment exceeds its safe temperature threshold, so I can intervene quickly.
+As a planner, I want to see all historical temperature excursions in the dashboard to analyze trends and improve planning.
+5️⃣ Success Metrics:
+% of excursions detected and alerted within X minutes.
+Reduction in spoiled shipments.
+Alert acknowledgment rate in dashboard.
+6️⃣ Technical Considerations:
+Sensor data ingested via Kafka or Pub/Sub, stored in BigQuery.
+Threshold definitions per product type (e.g. 2–8 °C for pharma).
+Integration with existing notification service.
+7️⃣ Analytics / Tracking Requirements:
+Event: alert_generated, with properties (asset_id, threshold_breached, timestamp).
+Event: alert_viewed, alert_acknowledged.
+Dashboards showing number of excursions, response time.
+8️⃣ Risks / Open Questions:
+How to handle delayed sensor data or missing readings?
+How customizable do thresholds need to be for different customers?
+Risk of alert fatigue if thresholds are too tight.
+9️⃣ Alignment Plan:
+I’d share the draft PRD in Confluence.
+Review with product, engineering, data, and customer teams.
+Document and track decisions/changes.
+Use it as a single source of truth during development.
 
 
 
 
 
 
+✅ Problem:
+Customers today don’t receive timely information on route deviations. This leads to delays, risk of theft, and they only find out after it’s too late to intervene.
+
+✅ Goal:
+Provide real-time route deviation alerts so supply chain managers can proactively intervene, reduce losses, and improve delivery reliability.
+
+✅ Scope:
+
+In scope:
+
+Real-time alerts for route deviations during in-transit truck shipments.
+
+Dashboard integration to view and acknowledge alerts.
+
+Out of scope:
+
+Rail, ocean shipments (planned for future phases).
+
+Customer-specific threshold customization (future phase).
+
+✅ User Stories:
+
+As a supply chain manager, I want to know when a shipment has deviated from its planned route so I can intervene proactively.
+
+As a planner, I want historical data on route deviations so I can analyze trends and plan better.
+
+✅ Success Metrics:
+
+% of deviations detected and alerted within target time.
+
+Reduction in delayed or lost shipments.
+
+Alert acknowledgment rate in dashboard.
+
+✅ Technical Considerations:
+
+Real-time streaming sensor data via Kafka or Pub/Sub.
+
+Access to planned route data (waypoints, corridors).
+
+Flagging deviations based on defined geofence thresholds (e.g. 2–5 km off-route).
+
+Integration with existing notification service (email/SMS/push).
+
+✅ Analytics / Tracking Requirements:
+
+Track events: alert_sent, alert_viewed, alert_acted_on.
+
+Dashboard metrics:
+
+% of assets with deviations.
+
+% of alerts acted upon.
+
+Estimated savings or reduced losses.
+
+✅ Risks / Open Questions:
+
+How to handle delayed or missing sensor data?
+
+How to set thresholds to balance sensitivity vs. alert fatigue?
+
+How often location data updates (granularity)?
+
+✅ Alignment Plan:
+
+Share draft PRD in Confluence with all stakeholders.
+
+Review and refine collaboratively.
+
+Document and track all changes.
+
+Use as single source of truth throughout development.
 
 
+
+
+
+
+“A PRD defines what problem we're solving, why it matters, and what the requirements are at a high level. It's for aligning product, design, engineering, and business around the scope and goals.
+
+A tech spec is more detailed—it explains how engineering will actually implement those requirements, including architecture, APIs, data models, and edge cases.
+
+User stories are even smaller units—they describe specific user needs or features in actionable, testable formats for development, like ‘As a user, I want X so I can Y.’
+
+In short: The PRD aligns on what and why. The tech spec explains how. User stories break it down into buildable tasks.”
+
+
+
+How do you make sure engineering and product agree on a PRD?”
+✅ ⭐️ Short Interview Answer:
+
+“I’d start by involving engineering early—sharing context, goals, and customer pain points so they understand the ‘why.’ I’d work collaboratively to refine scope and technical considerations. I'd hold review sessions where we walk through the draft PRD line by line, making sure everyone agrees on definitions, requirements, and edge cases. I’d also explicitly document and get buy-in on success metrics and timelines. Finally, I'd share the PRD in a shared place like Confluence or Jira and track any follow-up changes, so it remains a single source of truth.”
+
+How do you handle disagreements about scope when writing a PRD?”
+✅ ⭐️ Short Interview Answer:
+
+“First, I try to make sure everyone is clear on the underlying customer problem we're solving and the business goals—aligning on why before what. Then I listen carefully to each team's concerns. For example, engineering might be worried about complexity, while product might want more features. I'd facilitate the discussion to find tradeoffs or propose phased approaches—defining what is MVP vs future. If there's still disagreement, I'd escalate to leadership with clear pros and cons documented. Ultimately, the goal is to ensure everyone agrees on a clear, realistic, and valuable scope before development starts.”
+
+
+Scope creep is when new features, requirements, or tasks keep getting added to a project without proper planning or approval—causing delays, cost overruns, and confusion.
+
+
+
+
+
+Imagine a situation where customers are reporting that they’re not receiving real-time route deviation alerts as expected. As the Technical Product Analyst, how would you investigate and help debug this issue? Please walk me through your approach.
+
+
+
+Since customers are seeing route deviations appear in the dashboard but aren't receiving alerts—and this issue started right after a code deploy—I’d approach the investigation in structured steps:
+
+1️⃣ Compare before and after the change:
+
+I’d pull data on the number of route deviation alerts generated per day for 1–2 weeks before and a few days after the deploy.
+
+I’d also normalize by number of shipments to see if the alert rate per 1000 shipments dropped significantly.
+
+2️⃣ Segment the data:
+
+I’d break it down by customer, geography, and route corridor to see if the issue is widespread or isolated.
+
+For example: Are all customers affected, or just specific regions?
+
+3️⃣ Check the detection pipeline:
+
+I’d analyze event logs or intermediate tables that track when a deviation is flagged.
+
+The key question: Did the new code stop detecting deviations, or did it detect them but fail to trigger the alert?
+
+4️⃣ Sample real shipments:
+
+I’d look at example shipments that customers complained about.
+
+I’d check their planned route vs. actual path to confirm they truly went off-route.
+
+Then I’d verify if our detection logic correctly flagged them.
+
+5️⃣ Review error logs:
+
+I’d check logs for errors or warnings in the alert generation or notification service around the time of the deploy.
+
+For example: Did the new code introduce exceptions or failures that prevented alert sending?
+
+6️⃣ Collaborate with engineering:
+
+I’d share findings with engineering—especially the before/after alert volume trends, any segments most impacted, and concrete shipment examples.
+
+I’d help trace exactly where in the pipeline the breakdown occurred so they can fix it quickly.
+
+By systematically comparing data, validating real examples, and working closely with engineering, we can isolate the root cause of the issue and restore proper alerting for customers.
 
