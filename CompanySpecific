@@ -187,3 +187,37 @@ Given Chorus View's focus on real-time data and actionable insights in supply ch
 How would you design an end-to-end analytics system to enable real-time tracking and analysis of asset visibility for our customers? Please walk me through the steps and components you'd include.
 
 
+"Walk me through the data flow for [a specific feature, e.g., 'Intelligent Inventory Anomaly Detection']. Where does the data originate, what transformations does it undergo, and how does it reach the end-user or downstream systems?"
+
+Sample Answer:
+"Certainly. Let's trace the data flow for the 'Intelligent Inventory Anomaly Detection' feature we discussed.
+
+The journey begins at the Data Ingestion Layer, where raw inventory data originates from several sources:
+
+Real-time Inventory Counts: This comes directly from our customers' Warehouse Management Systems (WMS) and Enterprise Resource Planning (ERP) systems, as well as IoT sensors in warehouses or on assets in transit. This is high-volume, real-time data, so it would be streamed through a robust messaging queue like Kafka.
+
+Historical Data & Static Master Data: This includes past sales records, shipment logs, product catalogs, warehouse locations, and asset master data. This is typically ingested in batches using orchestration tools like Airflow from customer databases or our own internal data stores.
+
+All this raw, disparate data first lands in a Staging Layer, which acts as a Data Lake (e.g., in Google Cloud Storage or BigQuery raw tables). Here, initial data sanity checks are performed by Airflow tasks to ensure completeness and integrity.
+
+Next is the Data Transformation and Processing Layer. This is where the 'intelligence' is built. We'd use a tool like dbt to perform several crucial transformations:
+
+Cleaning & Standardization: Data types are validated, missing values are handled, and formats are standardized.
+
+Integration & Aggregation: Real-time and batch data are joined and aggregated to create a comprehensive view of current and historical inventory levels, expected inventory based on sales/shipments, and asset locations.
+
+Feature Engineering: New features are calculated, such as inventory deviation, recent activity spikes, or historical anomaly patterns.
+
+Anomaly Detection: The core of the feature. This would involve a dedicated Anomaly Detection Service that consumes the transformed data (likely from a curated table in BigQuery). This service would apply statistical models or machine learning algorithms to compare current inventory levels against historical patterns and expected levels (derived from sales/shipment data), flagging any significant, unexplained discrepancies based on pre-defined thresholds.
+
+The resulting 'curated' data, including the anomaly flags and their severity, is then stored in an Analytical Database (e.g., a specific schema in BigQuery).
+
+Finally, we reach the Data Consumption/Application Layer, where the insights are delivered:
+
+Dashboards: The curated data feeds into tools like Looker, creating a dedicated 'Inventory Anomaly Dashboard' for our customers. This provides an overview of inventory health, visualizes discrepancies, and allows drill-downs.
+
+Alerting System: Critically, the detected anomalies trigger proactive notifications. The Anomaly Detection Service would pass validated anomaly events to a dedicated Notification Dispatcher. This dispatcher sends alerts via in-app notifications within the Summit Dashboard, email, and potentially configurable webhooks to integrate with customers' own operational systems.
+
+APIs: We might also expose APIs for customers to programmatically access anomaly data or their current inventory status if needed for their internal systems.
+
+Airflow orchestrates the entire pipeline, ensuring data freshness and robust error handling throughout this flow."
