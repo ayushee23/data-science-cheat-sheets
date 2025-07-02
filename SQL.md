@@ -234,12 +234,18 @@ WITH RECURSIVE emp_cte AS (
 
 9. How do you design a database schema for scalability?Use normalization, indexing, proper data types, avoid bottlenecks, plan for sharding or replication if needed.
 
-10. What is the difference between OLTP and OLAP databases?
+To design a scalable database schema, I start by understanding the use case(is it OLAP or OLTP) and access patterns. Normalized tables(reduces redundancy) are better for OLTP and denormalized(faster read performance) for OLAP. Indexes speed up read queries but add overhead to writes so I'd choose indexes based on the most common queries. Partition large tables by date, region, or another logical key. I also ensure schema changes are managed carefully over time. Finally, I consider scaling strategies like using read replicas for high-load systems to offload reads from the primary database. Overall, it’s about designing for the workload today while making sure it can handle growth tomorrow.
+
+11. What is the difference between OLTP and OLAP databases?
 
 OLTP (Online Transaction Processing): Handles real-time transactions, optimized for speed and reliability.
 
 OLAP (Online Analytical Processing): Used for data analysis and reporting, optimized for complex queries and aggregation.
 
 
+difference between stored procedure and view?
 
+A view is like a saved SQL query. It shows you live, up-to-date data from the underlying tables.
+
+A view is a saved SQL query that acts like a virtual table. It doesn’t store data itself—instead, it runs the underlying SQL each time you query it. Views help simplify complex logic, enforce consistent definitions, and make data easier to use across teams. It is generally read-only so iy can only to be used to read data and not update/write it. A stored procedure, on the other hand, is a compiled block of code that can perform operations like inserting or updating data, include control flow, and accept parameters. It's more like a function that executes a set of instructions, whereas a view is like a live read-only window into the data.
 
