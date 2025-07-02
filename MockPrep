@@ -1,10 +1,26 @@
-A North Star Metric is the single most meaningful metric that best captures the value our product delivers to customers over time. It should be: (1) directly tied to customer value, (2) measurable and leading (not purely lagging revenue), (3) easy for the team to rally around, and (4) resistant to gaming or misinterpretation.
-To select one for Chorus View, I’d first clarify the mission and vision—what is the core value we want to deliver? Then I’d map user behaviors that drive that value, identify leading indicators of success, and test candidate metrics for alignment with long-term retention and growth.
-For example, if the mission is to deliver reliable, sustainable energy insights to customers, the NSM might be “monthly active users consuming energy insights” or “number of optimized energy decisions per customer.”
+A North Star Metric is the single most meaningful metric that best captures the value our product 
+delivers to customers over time. It should be: (1) directly tied to customer value, 
+(2) measurable and leading (not purely lagging revenue), (3) easy for the team to rally around, 
+and (4) resistant to gaming or misinterpretation.
+To select one for Chorus View, I’d first clarify the mission and vision—what is the core value 
+we want to deliver? Then I’d map user behaviors that drive that value, identify leading indicators 
+of success, and test candidate metrics for alignment with long-term retention and growth.
+For example, if the mission is to deliver reliable, sustainable energy insights to customers, 
+the NSM might be “monthly active users consuming energy insights” or “number of 
+optimized energy decisions per customer.”
 
-A product analyst, in my view, is a data-driven problem solver who sits at the intersection of product, engineering, and business. Their core responsibility is to translate raw data into actionable insights that inform product strategy, identify areas for improvement, and ultimately drive product success.
+A product analyst, in my view, is a data-driven problem solver who sits at the intersection of 
+product, engineering, and business. Their core responsibility is to translate raw data into 
+actionable insights that inform product strategy, identify areas for improvement, and 
+ultimately drive product success.
 
-For a company like Chorus View, which specializes in real-time visibility, condition monitoring, and remote inventory management within supply chains, this role would be particularly focused on understanding how our users interact with our platform to manage their assets. This involves defining, tracking, and analyzing metrics related to asset visibility, operational efficiency, anomaly detection, and the impact of our insights on customer decision-making. The goal is to ensure our platform is providing maximum value to our users by making their supply chains more efficient and resilient.
+For a company like Chorus View, which specializes in real-time visibility, condition monitoring,
+and remote inventory management within supply chains, this role would be particularly focused on 
+understanding how our users interact with our platform to manage their assets. 
+This involves defining, tracking, and analyzing metrics related to asset visibility, 
+operational efficiency, anomaly detection, and the impact of our insights on customer 
+decision-making. The goal is to ensure our platform is providing maximum value to our users by 
+making their supply chains more efficient and resilient.
 
 
 Input metrics: Things you (or the user) can directly control → they cause outcomes.
@@ -46,13 +62,16 @@ Onboarding completion rate
 Query latency (how fast insights load)
 
 Example answer you could give in the interview
-Sure. Input metrics are what we can directly influence that drive success—like system or user behaviors. Output metrics measure the outcomes or value delivered.
+Sure. Input metrics are what we can directly influence that drive success—like system or user 
+behaviors. Output metrics measure the outcomes or value delivered.
 
 For Chorus View’s energy insights platform:
 
-Output metrics might include customer retention rate, % energy cost reduction, NPS, or monthly active users using insights.
+Output metrics might include customer retention rate, % energy cost reduction, NPS, or monthly 
+active users using insights.
 
-Input metrics could be number of insights delivered per user, timeliness/accuracy of those insights, onboarding completion rate, or engagement with notifications.
+Input metrics could be number of insights delivered per user, timeliness/accuracy of those 
+insights, onboarding completion rate, or engagement with notifications.
 
 The idea is to improve inputs we control to drive better output metrics reflecting customer value.
 
@@ -60,11 +79,13 @@ The idea is to improve inputs we control to drive better output metrics reflecti
 
 Let’s say our team has picked “monthly active users consuming insights” as the North Star Metric.
 
-How would you define it precisely to avoid ambiguity? What steps would you take to make sure the entire team measures it consistently?
+How would you define it precisely to avoid ambiguity? What steps would you take to make sure the 
+entire team measures it consistently?
 
 To avoid ambiguity, I'd first write a clear, precise definition. For example:
 
-“A monthly active user consuming insights” = any unique user account that views at least one insights dashboard or report in a calendar month.”
+“A monthly active user consuming insights” = any unique user account that views at least one 
+insights dashboard or report in a calendar month.”
 
 Or if we want stricter engagement:
 
@@ -78,22 +99,48 @@ Data source (analytics platform)
 
 Query or formula used
 
-Then I'd run this by product, engineering, and analytics stakeholders to ensure it’s feasible to measure consistently.
+Then I'd run this by product, engineering, and analytics stakeholders to ensure it’s feasible to 
+measure consistently.
 
-Finally, I’d socialize it across the org via dashboards, metric dictionaries, and onboarding materials to ensure everyone uses the same definition.
+Finally, I’d socialize it across the org via dashboards, metric dictionaries, and onboarding 
+materials to ensure everyone uses the same definition.
 
-Imagine usage is stagnating on our platform. How would you approach defining metrics to diagnose why?
+Imagine usage is stagnating on our platform. How would you approach defining metrics to 
+diagnose why?
 What kinds of metrics would you set up to figure out what’s going wrong?
 
-checking data(broken events, pipelines), analysing funnel to understand where user was falling off, internal factors, segmentation, external factors
+checking data(broken events, pipelines), analysing funnel to understand where user was falling 
+off, internal factors, segmentation, external factors
 
-Since our North Star Metric—monthly active users consuming insights—is flat, I’d approach diagnosing it systematically. First, I’d perform data sanity checks to ensure our tracking events and pipelines are accurate. Next, I’d break down the user conversion funnel into stages like sign-ups, onboarding completion, first insight viewed, and repeat views to identify any increased drop-offs. I’d also segment users by attributes such as new versus returning, geography, industry segment, or customer size to see if specific cohorts are affected. Additionally, I’d define and monitor feature-level engagement metrics, such as page views per user, average insights viewed per session, and notification opens, to see if core usage patterns have shifted. I’d correlate any changes with our release notes or recent UI changes to identify product-driven causes. Finally, I’d consider external factors like industry trends, seasonality, or macroeconomic conditions that could be suppressing demand. This combination of funnel, segmentation, feature engagement, and contextual analysis would help me systematically pinpoint why usage is stagnant.
+Since our North Star Metric—monthly active users consuming insights—is flat, I’d approach 
+diagnosing it systematically. First, I’d perform data sanity checks to ensure our tracking 
+events and pipelines are accurate. Next, I’d break down the user conversion funnel into stages 
+like sign-ups, onboarding completion, first insight viewed, and repeat views to identify any 
+increased drop-offs. I’d also segment users by attributes such as new versus returning, 
+geography, industry segment, or customer size to see if specific cohorts are affected. 
+Additionally, I’d define and monitor feature-level engagement metrics, such as page views per 
+user, average insights viewed per session, and notification opens, to see if core usage patterns 
+have shifted. I’d correlate any changes with our release notes or recent UI changes to identify 
+product-driven causes. Finally, I’d consider external factors like industry trends, seasonality, 
+or macroeconomic conditions that could be suppressing demand. This combination of funnel, 
+segmentation, feature engagement, and contextual analysis would help me systematically pinpoint 
+why usage is stagnant.
 
 Suppose leadership wants to track “insights delivered” as a key metric.
-How would you define it precisely? What pitfalls would you watch out for when using this as a metric?
+How would you define it precisely? What pitfalls would you watch out for when using this as a 
+metric?
 
-I’d start by working with stakeholders to agree on a precise definition of “insights delivered.” For example: “insight delivered” could mean any unique, system-generated recommendation or visualization sent to a user via the dashboard, email, or notification. I’d want to specify the exact tracked event—like ‘insight_view’ or ‘insight_notification_sent’—and decide whether to count unique insights or total views. I'd also define the aggregation: insights delivered per user per day, per business per month, etc.
-For pitfalls, I’d be cautious about this metric being too much of a vanity metric. It might go up if we spam users with low-quality insights, which could hurt engagement or satisfaction. I'd also watch out for duplicates or inflating the count via technical errors. Finally, I'd ensure we balance this metric with quality/engagement outcomes—like click-throughs, usage depth, or NPS—to make sure “insights delivered” actually drives customer value.
+I’d start by working with stakeholders to agree on a precise definition of “insights delivered.” 
+For example: “insight delivered” could mean any unique, system-generated recommendation or 
+visualization sent to a user via the dashboard, email, or notification. I’d want to specify the 
+exact tracked event—like ‘insight_view’ or ‘insight_notification_sent’—and decide whether to count 
+unique insights or total views. I'd also define the aggregation: insights delivered per user per 
+day, per business per month, etc.
+For pitfalls, I’d be cautious about this metric being too much of a vanity metric. It might go 
+up if we spam users with low-quality insights, which could hurt engagement or satisfaction. 
+I'd also watch out for duplicates or inflating the count via technical errors. Finally, 
+I'd ensure we balance this metric with quality/engagement outcomes—like click-throughs, 
+usage depth, or NPS—to make sure “insights delivered” actually drives customer value.
 
 
 
@@ -123,17 +170,23 @@ Information overload
 Lack of definitions
 Missing context or goals
 
-First, I’d clarify that the dashboard is for the Chorus View product team to monitor core product health and usage, so the audience is product managers and analysts making prioritization decisions.
+First, I’d clarify that the dashboard is for the Chorus View product team to monitor core 
+product health and usage, so the audience is product managers and analysts making prioritization 
+decisions.
 
 1. Metric categories:
 
-Outcome / North Star Metric: Monthly active users consuming insights (our primary measure of delivered value).
-Input / Leading Metrics: Number of insights delivered per user, onboarding completion rate, notification open rate, page load times.
-Diagnostic/Drilldown Metrics: Engagement depth (avg insights viewed per user), new vs returning user breakdown, churn/retention rate, feature-level usage.
+Outcome / North Star Metric: Monthly active users consuming insights (our primary measure of 
+delivered value).
+Input / Leading Metrics: Number of insights delivered per user, onboarding completion rate, 
+notification open rate, page load times.
+Diagnostic/Drilldown Metrics: Engagement depth (avg insights viewed per user), new vs 
+returning user breakdown, churn/retention rate, feature-level usage.
 
 2. Dashboard structure:
 
-Top section: Key summary cards with the North Star Metric and input metrics, all with trends over time (weekly/monthly).
+Top section: Key summary cards with the North Star Metric and input metrics, all with trends over 
+time (weekly/monthly).
 Middle section: Funnel visualization from sign-up → onboarding → first insight → repeat usage.
 Bottom section: Segmentation by geography, customer size, and industry to identify differences.
 Alerts/Anomalies: Highlight large week-over-week changes or deviations from targets.
@@ -143,15 +196,27 @@ Alerts/Anomalies: Highlight large week-over-week changes or deviations from targ
 Avoiding clutter by prioritizing actionable metrics.
 Ensuring definitions are consistent and documented.
 Updating the dashboard automatically with latest data so the team trusts it.
-This way, the dashboard gives the product team both high-level health and drill-down capability for diagnosing issues.
+This way, the dashboard gives the product team both high-level health and drill-down 
+capability for diagnosing issues.
 
 
 
-Our North Star Metric is growing, but revenue isn’t keeping up. How would you investigate this? What metrics or analyses would you use?
+Our North Star Metric is growing, but revenue isn’t keeping up. How would you investigate this? 
+What metrics or analyses would you use?
 
-I’d start with a data sanity check to ensure our pipelines and events are correct. Then I’d analyze the payment conversion funnel to identify where users may be dropping off—like checkout friction or UI issues preventing payment completion. I’d segment users into new vs returning to see if growth is coming primarily from new users who aren’t yet converting to paid plans. I'd also compare engagement metrics—such as insights consumed and page views—across these groups to check if new users are really getting value or if activation is lagging.
+I’d start with a data sanity check to ensure our pipelines and events are correct. 
+Then I’d analyze the payment conversion funnel to identify where users may be dropping off—like 
+checkout friction or UI issues preventing payment completion. I’d segment users into new vs 
+returning to see if growth is coming primarily from new users who aren’t yet converting to paid 
+plans. I'd also compare engagement metrics—such as insights consumed and page views—across 
+these groups to check if new users are really getting value or if activation is lagging.
 
-Beyond that, I'd analyze plan mix and pricing—are new sign-ups skewing toward free tiers or discounted plans? I'd look at ARPU trends to see if per-user revenue is declining even with user growth. I’d also review churn rates to see if we’re losing paying customers faster than before. Finally, I’d consider cohort analyses to see if newer user cohorts are monetizing more slowly. By combining funnel, engagement, pricing, and retention metrics, we can pinpoint why user growth isn’t translating into revenue growth.
+Beyond that, I'd analyze plan mix and pricing—are new sign-ups skewing toward free tiers or 
+discounted plans? I'd look at ARPU trends to see if per-user revenue is declining even with 
+user growth. I’d also review churn rates to see if we’re losing paying customers faster than 
+before. Finally, I’d consider cohort analyses to see if newer user cohorts are monetizing more 
+slowly. By combining funnel, engagement, pricing, and retention metrics, we can pinpoint why 
+user growth isn’t translating into revenue growth.
 
 
 Imagine leadership says:
@@ -161,6 +226,15 @@ Imagine leadership says:
 
 
 
-First, I’d work with stakeholders—like PMs and business leads—to agree on a clear, shared definition of “engagement” for the insights dashboard. For example, is it simply users visiting the dashboard daily, or actually interacting meaningfully with multiple insights? Once we have that definition, I’d propose tracking core metrics such as DAU (daily active users on the dashboard), WAU, and Stickiness (DAU/MAU ratio) to measure frequency of use. I’d also add depth metrics like average insights viewed per session, time spent on the dashboard, and repeat visits per user. Beyond that, I’d analyze the funnel leading to the dashboard—where users come from, where they drop off—to identify opportunities to improve discoverability and nudge them toward using it. Lastly, I’d include retention metrics (e.g., 7-day or 30-day returning users) to ensure that improvements are driving sustained engagement, not just one-time spikes.
+First, I’d work with stakeholders—like PMs and business leads—to agree on a clear, 
+shared definition of “engagement” for the insights dashboard. For example, is it simply users 
+visiting the dashboard daily, or actually interacting meaningfully with multiple insights? 
+Once we have that definition, I’d propose tracking core metrics such as DAU (daily active users 
+on the dashboard), WAU, and Stickiness (DAU/MAU ratio) to measure frequency of use. I’d also add 
+depth metrics like average insights viewed per session, time spent on the dashboard, and 
+repeat visits per user. Beyond that, I’d analyze the funnel leading to the dashboard—where users 
+come from, where they drop off—to identify opportunities to improve discoverability and nudge 
+them toward using it. Lastly, I’d include retention metrics (e.g., 7-day or 30-day returning users)
+to ensure that improvements are driving sustained engagement, not just one-time spikes.
 
 
