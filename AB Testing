@@ -11,10 +11,10 @@ Different versions of a product are called variants
 When there are two variants it is called A/B Test. More than 2 variants - A/B/N Test
 
 The goal of running an A/B test is to make data-driven decisions only when the results are reliable and reproducible
+A/B tests(randomized controlled experiment) are the best way to establish causality with high probability
 To make the results reproducible an important requirement is that the factor we rae testing is the cause of the change in the metric. change to product -> change to metric
 So when we launch the feature to the wider audience the impact can be predicted based on the treatment effect seen in the experiment 
 
-A/B tests(randomized controlled experiment) are the best way to establish causality with high probability
 
 5 major steps in running an A/B Test - 
 
@@ -22,7 +22,7 @@ STEP 1: Prerequisites
         - Before running an experiment few things have to be ready:
           We need to define the key metrics to measure the goal of the metric - Overall Evaluation             Criteria(it should be agreed upon by different stakeholders and should be practically                measured)
         - Changes should be easy to make
-        - Have enough randomization units - to be assigned to different variants. Most commonly used           randomization unit is user. Recommendation is have 100s because the larger the sample size           the smaller the effects can be detected
+        - Have enough randomization units - to be assigned to different variants. Most commonly used           randomization unit is user. Recommendation is have 100s because the larger the sample size the smaller the effects can be detected
 
 STEP 2: Experiment Design
         - What population of randomization units should be select? Do we want to target a specific             population or all users? Sometimes its useful to run experiments only on a certain segment           because the change affects only to that segment(eg - geography)
@@ -31,7 +31,7 @@ STEP 2: Experiment Design
 Step 3: Running Experiment
 Step 4: Result to Decision
         - After running the experiment for the required duration, we'll check and interpret the                results and use them to make the decision. 
-          First step is to do sanity checks to make sure the data is reliable. We continue with                analysis once the sanity checks are passed. If it fails, we discard the result and look              into root cause and we may need to re run the experiment. 
+          First step is to do sanity checks to make sure the data is reliable. We continue with                analysis once the sanity checks are passed. If it fails, we discard the result and look into root cause and we may need to re run the experiment. 
           If the test is passed, we make decision based on - 
           Tradeoffs between different metrics, cost of launching a change(new change may introduce             complexity and bugs to the code base and and maintenance can be costly, opportunity                  cost(the time and effort we spend launching a change might not be as much as the                     opportunity cost of giving up a different idea). 
 
@@ -45,16 +45,16 @@ Step 5: Post-Launch Monitoring
 
 What metrics to select?
 
-Think about what the user journey looks like. The funnel mostly wants to udge/push users to take some actions which when taken will be a success for us. This can help come up with success metrics for the experiment.
+Think about what the user journey looks like. The funnel mostly wants to nudge/push users to take some actions which when taken will be a success for us. This can help come up with success metrics for the experiment.
 Three kinds of operational metrics that companies use to measure success, progress, and areas of improvement-
 
-Goal metric/Success/True North/OKR/Primary metric - reflects a company's long term vision and always ties to a company's mission. They are a small set of metrics that a company truly cares about. Simple to communicate to stakeholders. It should also be stable over a long period of time to allow the organization to work towards improving it. They may be critcal to measure the overall success of the company, they may not eb suitable to measure the success of an experiment as they might be difficult to measure or may not be sensitive enough to product changes 
+Goal metric/Success/True North/OKR/Primary metric - reflects a company's long term vision and always ties to a company's mission. They are a small set of metrics that a company truly cares about. Simple to communicate to stakeholders. It should also be stable over a long period of time to allow the organization to work towards improving it. They may be critcal to measure the overall success of the company, they may not be suitable to measure the success of an experiment as they might be difficult to measure or may not be sensitive enough to product changes 
 
 Driver metric/surrogate/indirect/predictive metric - are often used to measure short term objectives. They align with the goal metrics but are more sensitive and actionable to be able to make major short-term progress and drive teams to work on it. Therefore, better than goal metrics for A/B testing.  
 
 Guardrail metric - guard us from harming the business and violating important experiment assumptions. They can be split into two -
 organizational guardrail metrics: If this metric shifts in negative direction, the business suffers significant loss. Eg- page load latency(commonly used), errors per page, client crashes
-Trustworthy related metrics - they are used to monitor the trustworthiness of an experiment that is to check if there is any violation of assumptions eg - randomization units assigned to variants are truly random(sample mismatch ration - numbers assigned to the variants are different. Perform t-test or chi-test to check if the assignment ratio matches with what was designed. 
+Trustworthy related metrics - they are used to monitor the trustworthiness of an experiment that is to check if there is any violation of assumptions eg - randomization units assigned to variants are truly random(sample mismatch ratio - numbers assigned to the variants are different. Perform t-test or chi-test to check if the assignment ratio matches with what was designed. 
 
 A good metric should be simple, easy to understand, clear so that there is no abiguity in interpretation, actionable
 
@@ -87,7 +87,7 @@ Others can be cookie(can identify users without logging in but dont persist acro
 Considerations when choosing randomization units - 
 Consistent user experience(for any design changes we use user ID or cookie as randomization unit). In experiments where users aren't logged in, we often use cookies as the randomization unit. On the first visit, we assign the user to a variant and store it in a cookie so the experience stays consistent across sessions. It’s great for A/B testing design or layout changes and works especially well for anonymous traffic. The trade-off is that it’s device/browser-specific, so the same user on two devices might be treated as two users.
 
-If the change is not visible to users the n the randomization unit will depend on what we want to measure. Eg - website performance changes, changes to backend algorithm
+If the change is not visible to users then the randomization unit will depend on what we want to measure. Eg - website performance changes, changes to backend algorithm
 
 Another thing to consider is the coarseness of the randomization  unit and unit of analysis(what you are measuring like page views, clicks). If the ran. unit is too broad(eg-region/company) an you are measuring usrr level behavior the results will be misleading. Rule is to always randomize at the same level or finer level than unit of analysis.
 
