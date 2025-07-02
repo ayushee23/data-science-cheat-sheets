@@ -4,9 +4,9 @@ Database(MySQL, Postgres, oracle) Vs Data Warehouse(teradata, exadata, redshift,
 
 Data warehouse is built on top of database(made from multiple databases) but used for different purposes. 
 DW handles larges amounts of data, has read-heavy operations, optimal for high-latency operations, 
-contains denormalized data(can contain redundant data), columnar storage(parquet), optimized for parallel processing, 
-OLAP systems use data warehousing solutions. DW solutions work mostly on structured data(as opposed to Spark). 
-DW integrates data coming from multiple sources.
+contains denormalized data(can contain redundant data), columnar storage(parquet), optimized for parallel 
+processing, OLAP systems use data warehousing solutions. DW solutions work mostly on structured data
+(as opposed to Spark). DW integrates data coming from multiple sources.
 
 Database is designed to store small amounts of data, for write-heavy operations, used for low-latency operations, normalized data, row-based storage, 
 not optimized for parallel processing, OLTP use database solutions
@@ -343,6 +343,7 @@ DAU, WAU, MAU.
 Stickiness (DAU/MAU).
 
 % of users who log in at least once per week.
+new vs repeat users
 
 ✅ Depth of Engagement:
 
