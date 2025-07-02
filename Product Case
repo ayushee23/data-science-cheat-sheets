@@ -38,6 +38,7 @@ STEP 2 - Did it happen suddenly or progressively? To understand if there is a te
 This can help figure out if it was due to internal reasons(production bug, issues with data collection or 
 data source) or external reasons such as seasonality, industry trend, competitors, special event, 
 natural disaster
+perform data sanity checks
 STEP 3 - Whether other products or features are experiencing the same? Any change to the product line?
 STEP 4 - Segment by user demographics and behavioral features (region, languages, platforms - ios/android) 
 If the change was applicable to only a certain segment or a certain segment is affected by it
